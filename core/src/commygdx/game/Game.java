@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class AuberGame extends com.badlogic.gdx.Game {
+public class Game extends com.badlogic.gdx.Game {
 	public SpriteBatch batch;
 	public static final int V_WIDTH=512;
 	public static final int V_HEIGHT=288;
