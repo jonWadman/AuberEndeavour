@@ -28,9 +28,9 @@ public class PlayScreen implements Screen {
         hud=new Hud(auberGame.batch);
         //load map
         mapLoader=new TmxMapLoader();
-        map=mapLoader.load("command.tmx");
+        map=mapLoader.load("map1.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
-        gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
+        gamecam.position.set(400,800,0);
 
 
     }
