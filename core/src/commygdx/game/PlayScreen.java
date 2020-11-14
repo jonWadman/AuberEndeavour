@@ -26,6 +26,7 @@ public class PlayScreen implements Screen {
         gamecam=new OrthographicCamera();
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         hud=new Hud(auberGame.batch);
+        //load map
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("command.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
@@ -43,7 +44,8 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         gamecam.update();
         renderer.setView(gamecam);
-        Gdx.gl.glClearColor(0,0,0,1);
+        //bg colour
+        Gdx.gl.glClearColor(61/255f,74/255f,77/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);

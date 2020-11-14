@@ -10,7 +10,7 @@ import commygdx.game.AuberGame;
 public class Hud {
     public Stage stage;
     private Viewport viewport;
-
+//used for buttons,text, etc
     public Hud(SpriteBatch sb){
         viewport=new FitViewport(AuberGame.V_WIDTH,AuberGame.V_HEIGHT,new OrthographicCamera());
         stage= new Stage(viewport,sb);

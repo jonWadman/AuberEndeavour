@@ -15,6 +15,9 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
+		//set size of window
+		Gdx.graphics.setWindowedMode(V_WIDTH*2,V_HEIGHT*2);
+
 	}
 
 	@Override
