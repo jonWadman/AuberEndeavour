@@ -1,6 +1,7 @@
 package commygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -41,7 +42,8 @@ public class PlayScreen implements Screen {
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("map1.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
-        gamecam.position.set(400,835,0);
+        //start pos
+        gamecam.position.set(475,770,0);
 
         setupBox2D();
     }
@@ -70,11 +72,15 @@ public class PlayScreen implements Screen {
         gamecam.update();
         renderer.setView(gamecam);
         //bg colour
-        Gdx.gl.glClearColor(61/255f,74/255f,77/255f,1);
+        //Gdx.gl.glClearColor(21/255f,25/255f,38/255f,1);
+        Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
+            Gdx.app.exit();
 
     }
 
