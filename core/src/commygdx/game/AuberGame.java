@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class AuberGame extends com.badlogic.gdx.Game {
 	public SpriteBatch batch;
-	public static final int V_WIDTH=512;
-	public static final int V_HEIGHT=288;
+	public static final int V_WIDTH=512/2;
+	public static final int V_HEIGHT=288/2;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
 		//set size of window
-		Gdx.graphics.setWindowedMode(V_WIDTH*2,V_HEIGHT*2);
+		Gdx.graphics.setWindowedMode(V_WIDTH*5,V_HEIGHT*5);
 
 	}
 
