@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import commygdx.game.Scenes.Hud;
 
 public class PlayScreen implements Screen {
-    private Game game;
+    private AuberGame auberGame;
     private Hud hud;
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -21,11 +21,11 @@ public class PlayScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
 
 
-    public PlayScreen(Game game){
-        this.game=game;
+    public PlayScreen(AuberGame auberGame){
+        this.auberGame = auberGame;
         gamecam=new OrthographicCamera();
-        gamePort=new FitViewport(Game.V_WIDTH,Game.V_HEIGHT,gamecam);
-        hud=new Hud(game.batch);
+        gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
+        hud=new Hud(auberGame.batch);
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("command.tmx");
         renderer=new OrthogonalTiledMapRenderer(map);
@@ -46,7 +46,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
     }
