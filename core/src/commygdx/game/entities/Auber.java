@@ -1,10 +1,9 @@
 package commygdx.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import commygdx.game.input.PlayerInput;
-import commygdx.game.system.MovementSystem;
+import commygdx.game.syst.MovementSystem;
 
 public class Auber extends Sprite {
 
