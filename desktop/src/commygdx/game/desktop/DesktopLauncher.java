@@ -8,7 +8,10 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new AuberGame(), config);
-		config.x=10;
-		config.y=10;
+		config.x=0;
+		config.y=0;
+		config.width=2560;
+		config.height=1440;
+
 	}
 }
