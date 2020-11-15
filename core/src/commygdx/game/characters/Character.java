@@ -5,10 +5,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import commygdx.game.syst.MovementSystem;
 
 public class Character {
-    private final float MOV_SPEED = 100f;
-    private World world;
-    private Body body;
-    private MovementSystem movementSystem;
+    protected final float MOV_SPEED = 100f;
+    protected World world;
+    protected Body body;
+    protected MovementSystem movementSystem;
 
     public Character(World world, Vector2 position){
         this.world = world;
@@ -26,7 +26,6 @@ public class Character {
 
     private void createBody(Vector2 position){
         BodyDef bodyDef = new BodyDef();
-        //temporary
         bodyDef.position.set(position);
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;

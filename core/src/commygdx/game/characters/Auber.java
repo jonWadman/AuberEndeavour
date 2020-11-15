@@ -8,10 +8,6 @@ import commygdx.game.syst.MovementSystem;
 
 public class Auber extends Character {
 
-    private World world;
-    private Body body;
-    private MovementSystem movementSystem;
-
     public Auber(World world, Vector2 position){
         super(world,position);
     }
