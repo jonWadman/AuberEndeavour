@@ -8,9 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import commygdx.game.Scenes.Hud;
+import commygdx.game.entities.Auber;
 
 public class PlayScreen implements Screen {
     private AuberGame auberGame;
@@ -20,6 +24,13 @@ public class PlayScreen implements Screen {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+
+    private Auber player;
+
+    //Box2D
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
 
 
     public PlayScreen(AuberGame auberGame){
@@ -34,7 +45,19 @@ public class PlayScreen implements Screen {
         //start pos
         gamecam.position.set(475,770,0);
 
+        setupBox2D();
+    }
 
+    private void setupBox2D(){
+        world = new World(new Vector2(0,0),true);
+        b2dr = new Box2DDebugRenderer();
+        //temp
+        player = new Auber(world);
+    }
+
+    public void update(float dt){
+        world.step(1/60f,6,2);
+        player.update(dt);
     }
 
     @Override
@@ -44,6 +67,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        update(delta);
+
         gamecam.update();
         renderer.setView(gamecam);
         //bg colour
