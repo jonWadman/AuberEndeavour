@@ -18,7 +18,7 @@ public class Auber extends Character {
     }
 
     @Override
-     void handleMovement(){
+     protected void handleMovement(){
         if(PlayerInput.left()){
             movementSystem.left();
         }

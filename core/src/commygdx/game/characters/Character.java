@@ -20,7 +20,7 @@ public class Character {
         handleMovement();
     }
 
-    void handleMovement(){
+    protected void handleMovement(){
 
     }
 
