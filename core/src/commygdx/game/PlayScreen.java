@@ -29,13 +29,14 @@ public class PlayScreen implements Screen {
     //Box2D
     private World world;
     private Box2DDebugRenderer b2dr;
-    private Box2dWorld creator;
+    private Box2dWorld tiles;
     public static int scale=6;
 
 
     public PlayScreen(AuberGame auberGame){
         this.auberGame = auberGame;
         gamecam=new OrthographicCamera();
+        gamecam.setToOrtho(false,AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         hud=new Hud(auberGame.batch);
         //load map
@@ -46,7 +47,8 @@ public class PlayScreen implements Screen {
         gamecam.position.set(475*scale,770*scale,0);
 
         setupBox2D();
-        creator = new Box2dWorld(this);
+        tiles = new Box2dWorld(this);
+
 
     }
 
