@@ -5,18 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import commygdx.game.Scenes.Hud;
-import commygdx.game.entities.Auber;
+import commygdx.game.characters.Auber;
 
 public class PlayScreen implements Screen {
     private AuberGame auberGame;
@@ -57,13 +54,13 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0,0),true);
         b2dr = new Box2DDebugRenderer();
         //temp
-        player = new Auber(world);
+        player = new Auber(world,new Vector2(100,100));
 
     }
 
     public void update(float dt){
         world.step(1/60f,6,2);
-        player.update(dt);
+        player.update();
     }
 
     @Override
