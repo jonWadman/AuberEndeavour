@@ -50,13 +50,13 @@ public class Hud {
         infiltratorTextLabel=new Label("infiltrators caught", new Label.LabelStyle(font, Color.WHITE));
         table.setPosition(250,0);
 
-        table.add(systemLabel).padTop(50);
+        table.add(systemLabel).expandX().padTop(50);
         table.row();
-        table.add(systemTextLabel).padTop(10);
+        table.add(systemTextLabel).expandX().padTop(10);
         table.row();
-        table.add(infiltratorLabel).padTop(50);
+        table.add(infiltratorLabel).expandX().padTop(50);
         table.row();
-        table.add(infiltratorTextLabel).padTop(10);
+        table.add(infiltratorTextLabel).expandX().padTop(10);
 
         stage.addActor(table);
 
