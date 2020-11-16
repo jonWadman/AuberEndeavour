@@ -48,7 +48,7 @@ public class Hud {
 
         infiltratorLabel = new Label(String.format("%d / 8 ",infiltratorsRemaining), new Label.LabelStyle(font, Color.WHITE));
         infiltratorTextLabel=new Label("infiltrators caught", new Label.LabelStyle(font, Color.WHITE));
-        table.setPosition(250,0);
+        table.setPosition(1100,0);
 
         table.add(systemLabel).expandX().padTop(50);
         table.row();

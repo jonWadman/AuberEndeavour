@@ -10,8 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
 import commygdx.game.Scenes.Hud;
 import commygdx.game.characters.Auber;
 
@@ -30,7 +29,7 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private Box2dWorld tiles;
-    public static int scale=6;
+    public static int scale=12;
 
 
     public PlayScreen(AuberGame auberGame){
@@ -38,13 +37,15 @@ public class PlayScreen implements Screen {
         gamecam=new OrthographicCamera();
         gamecam.setToOrtho(false,AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
+        Gdx.graphics.setWindowedMode(AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
         hud=new Hud(auberGame.batch);
         //load map
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("map1.tmx");
         renderer=new OrthogonalTiledMapRenderer(map,scale);
         //start pos
-        gamecam.position.set(475*scale,770*scale,0);
+        gamecam.position.set(400*scale,820*scale,0);
+
 
         setupBox2D();
         tiles = new Box2dWorld(this);
@@ -85,7 +86,6 @@ public class PlayScreen implements Screen {
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
             Gdx.app.exit();
         world = new World(new Vector2(0, 0), false);
