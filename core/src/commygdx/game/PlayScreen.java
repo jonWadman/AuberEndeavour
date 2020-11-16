@@ -30,7 +30,7 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private Box2dWorld creator;
-
+    public static int scale=6;
 
 
     public PlayScreen(AuberGame auberGame){
@@ -41,9 +41,9 @@ public class PlayScreen implements Screen {
         //load map
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("map1.tmx");
-        renderer=new OrthogonalTiledMapRenderer(map);
+        renderer=new OrthogonalTiledMapRenderer(map,scale);
         //start pos
-        gamecam.position.set(475,770,0);
+        gamecam.position.set(475*scale,770*scale,0);
 
         setupBox2D();
         creator = new Box2dWorld(this);

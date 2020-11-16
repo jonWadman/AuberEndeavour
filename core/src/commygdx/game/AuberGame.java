@@ -8,9 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class AuberGame extends com.badlogic.gdx.Game {
 	public SpriteBatch batch;
-	//6* maginification
-	public static final int V_WIDTH=2560/6;
-	public static final int V_HEIGHT=1440/6;
+	public static final int V_WIDTH=2560;
+	public static final int V_HEIGHT=1440;
 
 	@Override
 	public void create () {
