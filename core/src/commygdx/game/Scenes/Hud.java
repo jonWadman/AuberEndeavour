@@ -62,12 +62,16 @@ public class Hud {
 
 
 
+    }
+    public void systemDestroyed(){
+        systemsUp-=1;
+        systemLabel.setText(String.format("%d / 15",systemsUp));
 
     }
 
-    public void update(int systemsUp, int infiltratorsRemaining){
-        systemLabel.setText(String.format("%d / 15",systemsUp));
-        infiltratorLabel.setText(String.format("%d / 8 ",infiltratorsRemaining));
+    public void infiltratorCaught(){
+        infiltratorsRemaining-=1;
+        infiltratorLabel.setText(String.format("%d / 8",infiltratorsRemaining));
 
     }
 }
