@@ -13,7 +13,7 @@ public class Character {
     public Character(World world, Vector2 position){
         this.world = world;
         createBody(position);
-        movementSystem = new MovementSystem(body,MOV_SPEED);
+        //movementSystem = new MovementSystem(body,MOV_SPEED);
     }
 
     public void update(){
