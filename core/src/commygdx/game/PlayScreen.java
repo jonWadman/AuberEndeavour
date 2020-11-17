@@ -6,10 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.*;
 import commygdx.game.Scenes.Hud;
@@ -33,11 +36,12 @@ public class PlayScreen implements Screen {
     private Box2dWorld tiles;
     public static int scale=12;
 
+    private ShapeRenderer sh;
+
 
     public PlayScreen(AuberGame auberGame){
         this.auberGame = auberGame;
         gamecam=new OrthographicCamera();
-        gamecam.setToOrtho(false,AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         Gdx.graphics.setWindowedMode(AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
         hud=new Hud(auberGame.batch);
@@ -46,7 +50,6 @@ public class PlayScreen implements Screen {
         map=mapLoader.load("map1.tmx");
         renderer=new OrthogonalTiledMapRenderer(map,scale);
         //start pos
-        gamecam.position.set(400*scale,820*scale,0);
 
 
         setupShipStage();
@@ -57,7 +60,9 @@ public class PlayScreen implements Screen {
 
     private void setupShipStage(){
         shipStage = new ShipStage();
-        player = new Auber(new Vector2(30,30));
+        player = new Auber(new Vector2(450,778), auberGame.batch);
+        player.sprite.setPosition(450,778);
+        gamecam.position.set(450,778,0);
         shipStage.addActor(player);
     }
 
@@ -73,8 +78,11 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
-
-
+        System.out.println();
+        Vector3 pos=new Vector3((player.sprite.getX()),(player.sprite.getY()),0);
+        gamecam.position.set(pos);
+        gamecam.update();
+        auberGame.batch.setProjectionMatrix(gamecam.combined);
         gamecam.update();
         renderer.setView(gamecam);
         //bg colour
