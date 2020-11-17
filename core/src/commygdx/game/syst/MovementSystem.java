@@ -5,27 +5,35 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class MovementSystem {
 
-    Body body;
+    Collider collider;
     float movementSpeed;
 
-    public MovementSystem(Body body,float speed){
-        this.body = body;
+    public MovementSystem(Vector2 position,float speed){
+        this.collider = new Collider(position);
         this.movementSpeed = speed;
     }
 
-    public void left(){
-        body.applyForce(new Vector2(-movementSpeed,0),body.getWorldCenter(),true);
+    public Vector2 left(){
+        Vector2 newPos = collider.position;
+        newPos.x -= movementSpeed;
+        return newPos;
     }
 
-    public void right(){
-        body.applyForce(new Vector2(movementSpeed,0),body.getWorldCenter(),true);
+    public Vector2 right(){
+        Vector2 newPos = collider.position;
+        newPos.x += movementSpeed;
+        return newPos;
     }
 
-    public void up(){
-        body.applyForce(new Vector2(0,movementSpeed),body.getWorldCenter(),true);
+    public Vector2 up(){
+        Vector2 newPos = collider.position;
+        newPos.y += movementSpeed;
+        return newPos;
     }
 
-    public void down(){
-        body.applyForce(new Vector2(0,-movementSpeed),body.getWorldCenter(),true);
+    public Vector2 down(){
+        Vector2 newPos = collider.position;
+        newPos.y -= movementSpeed;
+        return newPos;
     }
 }
