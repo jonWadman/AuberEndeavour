@@ -59,10 +59,9 @@ public class PlayScreen implements Screen {
     }
 
     private void setupShipStage(){
-        shipStage = new ShipStage();
+        shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
         player = new Auber(new Vector2(450,778), auberGame.batch);
         player.sprite.setPosition(450,778);
-        gamecam.position.set(450,778,0);
         shipStage.addActor(player);
     }
 
@@ -79,10 +78,10 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         update(delta);
         System.out.println();
-        Vector3 pos=new Vector3((player.sprite.getX()),(player.sprite.getY()),0);
+        Vector3 pos=new Vector3((player.getX())+player.getWidth()/2,(player.getY())+player.getHeight()/2,0);
+        shipStage.getViewport().getCamera().position.set(pos);
         gamecam.position.set(pos);
         gamecam.update();
-        auberGame.batch.setProjectionMatrix(gamecam.combined);
         gamecam.update();
         renderer.setView(gamecam);
         //bg colour
