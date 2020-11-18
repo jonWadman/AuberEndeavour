@@ -14,6 +14,7 @@ public class Box2dWorld {
     public Hashtable<Vector2, String> teleporters;
 
     public Box2dWorld(PlayScreen screen){
+        String[] rooms= new String[]{"command", "lab", "infirmary","crew","brig","engine"};
 
         TiledMap map= screen.getMap();
 
@@ -33,10 +34,13 @@ public class Box2dWorld {
 
         //}
         //teleporters
+        int roomId=0;
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            Vector2 center=new Vector2(rect.x,rect.y);
-            teleporters.put(center,"string");
+            Vector2 center=new Vector2(rect.x*12,rect.y*12);
+
+            teleporters.put(center,rooms[roomId]);
+            roomId+=1;
 
 
         }

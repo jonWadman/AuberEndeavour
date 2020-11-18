@@ -36,4 +36,9 @@ public class MovementSystem {
         newPos.y -= movementSpeed;
         return newPos;
     }
+
+    public Vector2 getPos(){
+        return collider.position;
+
+    }
 }

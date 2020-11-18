@@ -2,6 +2,8 @@ package commygdx.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import commygdx.game.Box2dWorld;
+import commygdx.game.PlayScreen;
 import commygdx.game.input.PlayerInput;
 
 public class Auber extends Character {
@@ -31,6 +33,15 @@ public class Auber extends Character {
         if(PlayerInput.down()){
             Vector2 position = movementSystem.down();
             setPosition(position.x,position.y);
+        }
+    }
+
+    public void  teleportCheck(Box2dWorld tiles){
+        for ( Vector2 key : tiles.teleporters.keySet()) {
+            if( movementSystem.getPos().x>key.x-50 & movementSystem.getPos().x<key.x+50 & movementSystem.getPos().y>key.y-50& movementSystem.getPos().y<key.y+50){
+                System.out.println(tiles.teleporters.get(key));
+
+            }
         }
     }
 }
