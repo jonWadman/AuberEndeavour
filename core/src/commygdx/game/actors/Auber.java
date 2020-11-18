@@ -36,13 +36,14 @@ public class Auber extends Character {
         }
     }
 
-    public void  teleportCheck(Box2dWorld tiles){
+    public boolean  teleportCheck(Box2dWorld tiles){
         for ( Vector2 key : tiles.teleporters.keySet()) {
-            if( movementSystem.getPos().x>key.x-50 & movementSystem.getPos().x<key.x+50 & movementSystem.getPos().y>key.y-50& movementSystem.getPos().y<key.y+50){
-                System.out.println(tiles.teleporters.get(key));
+            if( getX()>key.x-50 & getX()<key.x+50 & getY()>key.y-50& getY()<key.y+50){
+                return true;
 
             }
         }
+        return false;
     }
 
     //moves the camera to the auber when game starts

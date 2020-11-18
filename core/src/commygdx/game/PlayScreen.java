@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
@@ -101,7 +102,21 @@ public class PlayScreen implements Screen {
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        player.teleportCheck(tiles);
+
+        boolean t=player.teleportCheck(tiles);
+        System.out.println(t);
+        System.out.println(player.getX());
+        if (player.teleportCheck(tiles) && auberGame.onTeleport=="false"){
+            auberGame.setScreen(new TeleportMenu(auberGame));
+        }
+
+        if (auberGame.onTeleport!="true" && auberGame.onTeleport!="false"){
+            teleportAuber();
+            auberGame.onTeleport="false";
+        }
+
+
+
 
     }
 
@@ -112,6 +127,40 @@ public class PlayScreen implements Screen {
         gamePort.update(width,height);
         player.shuffle();
     }
+
+    public void teleportAuber(){
+        int x=0;
+        int y=0;
+
+        if (auberGame.onTeleport=="brig"){
+             x=180;
+             y=400;
+        }
+        if (auberGame.onTeleport=="command"){
+             x=450;
+             y=750;
+        }
+        if (auberGame.onTeleport=="engine"){
+             x=400;
+             y=180;
+        }
+        if (auberGame.onTeleport=="laboratory"){
+             x=300;
+             y=550;
+        }
+        if (auberGame.onTeleport=="crew"){
+             x=650;
+             y=350;
+        }
+        if (auberGame.onTeleport=="infirmary"){
+             x=400;
+             y=450;
+        }
+
+        player.setPosition(x*scale,y*scale);
+        player.movementSystem.updatePos(new Vector2(x*scale,y*scale));
+    }
+
 
 
     public TiledMap getMap(){

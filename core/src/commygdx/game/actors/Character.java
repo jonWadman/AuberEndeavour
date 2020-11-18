@@ -17,7 +17,7 @@ public abstract class Character extends Actor {
     protected final float MOV_SPEED = 10f;
 
     public Sprite sprite;
-    MovementSystem movementSystem;
+    public MovementSystem movementSystem;
     Batch batch;
 
     @Override
