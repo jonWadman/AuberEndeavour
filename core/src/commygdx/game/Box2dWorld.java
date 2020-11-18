@@ -11,15 +11,15 @@ import java.util.List;
 
 public class Box2dWorld {
     public Hashtable<Vector2, Boolean> systems;
-    public Hashtable<Vector2, String> teleporters;
+    public Hashtable<String,Vector2> teleporters;
 
     public Box2dWorld(PlayScreen screen){
-        String[] rooms= new String[]{"command", "lab", "infirmary","crew","brig","engine"};
+        String[] rooms= new String[]{"command", "laboratory", "infirmary","crew","brig","engine"};
 
         TiledMap map= screen.getMap();
 
          systems = new Hashtable<Vector2, Boolean>();
-         teleporters = new Hashtable<Vector2, String>();
+         teleporters = new Hashtable<String,Vector2>();
         //get systems
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -39,7 +39,7 @@ public class Box2dWorld {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             Vector2 center=new Vector2(rect.x*12,rect.y*12);
 
-            teleporters.put(center,rooms[roomId]);
+            teleporters.put(rooms[roomId],center);
             roomId+=1;
 
 
