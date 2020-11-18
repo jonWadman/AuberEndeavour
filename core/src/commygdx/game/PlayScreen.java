@@ -1,23 +1,21 @@
 package commygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.*;
 import commygdx.game.Scenes.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
+
+import java.util.List;
 
 public class PlayScreen implements Screen {
     private AuberGame auberGame;
@@ -39,6 +37,7 @@ public class PlayScreen implements Screen {
     private ShapeRenderer sh;
 
 
+
     public PlayScreen(AuberGame auberGame){
         this.auberGame = auberGame;
         gamecam=new OrthographicCamera();
@@ -56,13 +55,20 @@ public class PlayScreen implements Screen {
         tiles = new Box2dWorld(this);
 
 
+
     }
 
     private void setupShipStage(){
         shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
-        player = new Auber(new Vector2(450,778), auberGame.batch);
-        player.sprite.setPosition(450,778);
+        player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
+        player.sprite.setPosition(450*scale,778*scale);
+
+
+
         shipStage.addActor(player);
+
+
+
     }
 
     public void update(float dt){
@@ -77,7 +83,7 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
-        System.out.println();
+
         Vector3 pos=new Vector3((player.getX())+player.getWidth()/2,(player.getY())+player.getHeight()/2,0);
         shipStage.getViewport().getCamera().position.set(pos);
         gamecam.position.set(pos);
@@ -95,9 +101,11 @@ public class PlayScreen implements Screen {
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
-            Gdx.app.exit();
+        player.teleportCheck(tiles);
+
     }
+
+
 
     @Override
     public void resize(int width, int height) {
