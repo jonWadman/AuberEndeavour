@@ -44,4 +44,9 @@ public class Auber extends Character {
             }
         }
     }
+
+    //moves the camera to the auber when game starts
+    public void shuffle(){
+        setPosition(getX()+1,getY());
+    }
 }
