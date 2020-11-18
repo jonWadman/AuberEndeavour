@@ -35,8 +35,15 @@ public abstract class Character extends Actor {
         sprite = new Sprite(texture);
         sprite.setSize(250,250);
         movementSystem = new MovementSystem(position,MOV_SPEED);
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
     }
 
     protected abstract void handleMovement();
+
+    @Override
+    protected void positionChanged() {
+        super.positionChanged();
+        sprite.setPosition(getX(),getY());
+    }
 
 }
