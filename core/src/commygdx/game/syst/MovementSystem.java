@@ -13,6 +13,11 @@ public class MovementSystem {
         this.movementSpeed = speed;
     }
 
+    public void updatePos(Vector2 position){
+        this.collider = new Collider(position);
+
+    }
+
     public Vector2 left(){
         Vector2 newPos = collider.position;
         newPos.x -= movementSpeed;
