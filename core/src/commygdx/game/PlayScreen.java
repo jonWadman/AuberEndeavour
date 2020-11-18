@@ -57,6 +57,7 @@ public class PlayScreen implements Screen {
 
 
 
+
     }
 
     private void setupShipStage(){
@@ -129,36 +130,11 @@ public class PlayScreen implements Screen {
     }
 
     public void teleportAuber(){
-        int x=0;
-        int y=0;
+        float x=tiles.teleporters.get(auberGame.onTeleport).x+100;
+        float y=tiles.teleporters.get(auberGame.onTeleport).y;
 
-        if (auberGame.onTeleport=="brig"){
-             x=180;
-             y=400;
-        }
-        if (auberGame.onTeleport=="command"){
-             x=450;
-             y=750;
-        }
-        if (auberGame.onTeleport=="engine"){
-             x=400;
-             y=180;
-        }
-        if (auberGame.onTeleport=="laboratory"){
-             x=300;
-             y=550;
-        }
-        if (auberGame.onTeleport=="crew"){
-             x=650;
-             y=350;
-        }
-        if (auberGame.onTeleport=="infirmary"){
-             x=400;
-             y=450;
-        }
-
-        player.setPosition(x*scale,y*scale);
-        player.movementSystem.updatePos(new Vector2(x*scale,y*scale));
+        player.setPosition(x,y);
+        player.movementSystem.updatePos(new Vector2(x,y));
     }
 
 

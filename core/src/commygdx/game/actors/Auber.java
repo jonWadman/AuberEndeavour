@@ -37,8 +37,8 @@ public class Auber extends Character {
     }
 
     public boolean  teleportCheck(Box2dWorld tiles){
-        for ( Vector2 key : tiles.teleporters.keySet()) {
-            if( getX()>key.x-50 & getX()<key.x+50 & getY()>key.y-50& getY()<key.y+50){
+        for ( Vector2 val : tiles.teleporters.values()) {
+            if( getX()>val.x-50 & getX()<val.x+50 & getY()>val.y-50& getY()<val.y+50){
                 return true;
 
             }
