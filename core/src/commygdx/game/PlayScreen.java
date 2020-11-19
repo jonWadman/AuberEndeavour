@@ -42,6 +42,7 @@ public class PlayScreen implements Screen {
         gamecam=new OrthographicCamera();
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         Gdx.graphics.setWindowedMode(AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
+
         hud=new Hud(auberGame.batch);
         //load map
         mapLoader=new TmxMapLoader();
@@ -119,7 +120,6 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
-        player.shuffle();
     }
 
     public void teleportAuber(){

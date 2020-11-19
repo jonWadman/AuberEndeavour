@@ -69,7 +69,6 @@ public class MovementSystem {
     }
 
     public Vector2 getPos(){
-
         return collider.position;
 
     }

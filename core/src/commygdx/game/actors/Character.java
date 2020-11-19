@@ -30,6 +30,9 @@ public abstract class Character extends Actor {
         sprite.draw(batch);
     }
 
+
+
+
     public Character(Vector2 position,SpriteBatch batch,float MOV_SPEED){
         Texture texture = new Texture(Gdx.files.internal("Characters/auberSprite.png"));
         sprite = new Sprite(texture);
