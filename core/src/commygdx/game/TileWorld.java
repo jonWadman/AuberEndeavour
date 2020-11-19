@@ -13,6 +13,7 @@ import java.util.List;
 public class TileWorld {
     private Hashtable<String,Vector2> teleporters;
     private List<ShipSystem> shipSystems;
+    private List<Rectangle> walls;
 
     public TileWorld(PlayScreen screen){
         String[] rooms= new String[]{"command", "laboratory", "infirmary","crew","brig","engine"};
@@ -45,10 +46,17 @@ public class TileWorld {
 
         }
         //walls
-        //for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-            //Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        walls=new ArrayList<>();
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            rect.x=rect.x*12;
+            rect.y=rect.y*12;
+            rect.width=rect.width*12;
+            rect.height=rect.height*12;
+            walls.add(rect);
 
-        //}
+
+        }
 
     }
 
@@ -58,6 +66,10 @@ public class TileWorld {
     }
     public List<ShipSystem> getSystems(){
         return shipSystems;
+    }
+
+    public List<Rectangle> getWalls(){
+            return walls;
     }
 
     public String getRoom(float x, float y){
