@@ -1,6 +1,7 @@
 package commygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,15 +9,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
-import commygdx.game.Scenes.Hud;
+import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
-
-import java.util.List;
 
 public class PlayScreen implements Screen {
     private AuberGame auberGame;
@@ -32,7 +30,7 @@ public class PlayScreen implements Screen {
     private Auber player;
     private ShipStage shipStage;
 
-    private Box2dWorld tiles;
+    private TileWorld tiles;
     public static int scale=12;
 
     private ShapeRenderer sh;
@@ -53,9 +51,7 @@ public class PlayScreen implements Screen {
 
 
         setupShipStage();
-        tiles = new Box2dWorld(this);
-
-
+        tiles = new TileWorld(this);
 
 
     }
@@ -102,11 +98,10 @@ public class PlayScreen implements Screen {
         shipStage.draw();
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.updateAttacks(tiles.getSystems());
         hud.stage.draw();
 
         boolean t=player.teleportCheck(tiles);
-        System.out.println(t);
-        System.out.println(player.getX());
         if (player.teleportCheck(tiles) && auberGame.onTeleport=="false"){
             auberGame.setScreen(new TeleportMenu(auberGame));
         }
@@ -114,6 +109,11 @@ public class PlayScreen implements Screen {
         if (auberGame.onTeleport!="true" && auberGame.onTeleport!="false"){
             teleportAuber();
             auberGame.onTeleport="false";
+        }
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            Vector3 c= new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
+            gamecam.unproject(c);
+            System.out.println(c);
         }
 
 
@@ -130,9 +130,8 @@ public class PlayScreen implements Screen {
     }
 
     public void teleportAuber(){
-        float x=tiles.teleporters.get(auberGame.onTeleport).x+100;
-        float y=tiles.teleporters.get(auberGame.onTeleport).y;
-
+        float x=tiles.getTeleporters().get(auberGame.onTeleport).x+100;
+        float y=tiles.getTeleporters().get(auberGame.onTeleport).y;
         player.setPosition(x,y);
         player.movementSystem.updatePos(new Vector2(x,y));
     }
