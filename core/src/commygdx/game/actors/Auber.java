@@ -2,8 +2,7 @@ package commygdx.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import commygdx.game.Box2dWorld;
-import commygdx.game.PlayScreen;
+import commygdx.game.TileWorld;
 import commygdx.game.input.PlayerInput;
 
 public class Auber extends Character {
@@ -36,11 +35,10 @@ public class Auber extends Character {
         }
     }
 
-    public boolean  teleportCheck(Box2dWorld tiles){
-        for ( Vector2 val : tiles.teleporters.values()) {
+    public boolean  teleportCheck(TileWorld tiles){
+        for ( Vector2 val : tiles.getTeleporters().values()) {
             if( getX()>val.x-50 & getX()<val.x+50 & getY()>val.y-50& getY()<val.y+50){
                 return true;
-
             }
         }
         return false;
