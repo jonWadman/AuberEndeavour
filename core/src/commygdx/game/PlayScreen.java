@@ -110,11 +110,7 @@ public class PlayScreen implements Screen {
             teleportAuber();
             auberGame.onTeleport="false";
         }
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            Vector3 c= new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
-            gamecam.unproject(c);
-            System.out.println(c);
-        }
+        player.checkCollision(tiles.getWalls());
 
 
 

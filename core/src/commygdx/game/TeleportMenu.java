@@ -87,7 +87,6 @@ public class TeleportMenu implements Screen {
             }
 
 
-
         }
 
 
