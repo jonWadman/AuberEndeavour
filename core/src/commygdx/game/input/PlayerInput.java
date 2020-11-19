@@ -5,6 +5,9 @@ import com.badlogic.gdx.Input;
 
 public class PlayerInput {
 
+
+
+
     public static boolean left(){
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
             return true;

@@ -1,6 +1,7 @@
 package commygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,11 +12,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
-import commygdx.game.Scenes.Hud;
+import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
-
-import java.util.List;
 
 public class PlayScreen implements Screen {
     private AuberGame auberGame;
@@ -31,7 +30,7 @@ public class PlayScreen implements Screen {
     private Auber player;
     private ShipStage shipStage;
 
-    private Box2dWorld tiles;
+    private TileWorld tiles;
     public static int scale=12;
 
     private ShapeRenderer sh;
@@ -43,6 +42,7 @@ public class PlayScreen implements Screen {
         gamecam=new OrthographicCamera();
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         Gdx.graphics.setWindowedMode(AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
+
         hud=new Hud(auberGame.batch);
         //load map
         mapLoader=new TmxMapLoader();
@@ -52,8 +52,7 @@ public class PlayScreen implements Screen {
 
 
         setupShipStage();
-        tiles = new Box2dWorld(this);
-
+        tiles = new TileWorld(this);
 
 
     }
@@ -100,8 +99,22 @@ public class PlayScreen implements Screen {
         shipStage.draw();
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.updateAttacks(tiles.getSystems());
         hud.stage.draw();
-        player.teleportCheck(tiles);
+
+        boolean t=player.teleportCheck(tiles);
+        if (player.teleportCheck(tiles) && auberGame.onTeleport=="false"){
+            auberGame.setScreen(new TeleportMenu(auberGame));
+        }
+
+        if (auberGame.onTeleport!="true" && auberGame.onTeleport!="false"){
+            teleportAuber();
+            auberGame.onTeleport="false";
+        }
+        player.checkCollision(tiles.getWalls());
+
+
+
 
     }
 
@@ -111,6 +124,14 @@ public class PlayScreen implements Screen {
     public void resize(int width, int height) {
         gamePort.update(width,height);
     }
+
+    public void teleportAuber(){
+        float x=tiles.getTeleporters().get(auberGame.onTeleport).x+100;
+        float y=tiles.getTeleporters().get(auberGame.onTeleport).y;
+        player.setPosition(x,y);
+        player.movementSystem.updatePos(new Vector2(x,y));
+    }
+
 
 
     public TiledMap getMap(){
