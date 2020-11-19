@@ -10,6 +10,7 @@ public class Auber extends Character {
 
     public Auber(Vector2 position, SpriteBatch batch) {
         super(position,batch);
+        shuffle();
     }
 
     @Override
@@ -47,6 +48,7 @@ public class Auber extends Character {
 
     //moves the camera to the auber when game starts
     public void shuffle(){
-        setPosition(getX()+1,getY());
+        Vector2 position = movementSystem.left();
+        setPosition(position.x,position.y);
     }
 }
