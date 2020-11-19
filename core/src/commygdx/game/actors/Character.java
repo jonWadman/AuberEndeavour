@@ -32,13 +32,7 @@ public abstract class Character extends Actor {
         sprite.draw(batch);
     }
 
-    public Character(Vector2 position,SpriteBatch batch){
-        Texture texture = new Texture(Gdx.files.internal("Characters/auberSprite.png"));
-        sprite = new Sprite(texture);
-        sprite.setSize(150,170);
-        movementSystem = new MovementSystem(position,MOV_SPEED);
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
-    }
+
 
     protected abstract void handleMovement();
 
