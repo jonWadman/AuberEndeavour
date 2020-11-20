@@ -29,7 +29,6 @@ public class Infiltrator extends Character {
 
 
 
-
     @Override
     protected void handleMovement(){
         if(movementAI.left(new Vector2(getX(),getY()))){
