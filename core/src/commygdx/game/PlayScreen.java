@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
+import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
@@ -37,18 +38,16 @@ public class PlayScreen implements Screen {
 
 
 
+
     public PlayScreen(AuberGame auberGame){
         this.auberGame = auberGame;
         gamecam=new OrthographicCamera();
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
-        Gdx.graphics.setWindowedMode(AuberGame.V_WIDTH,AuberGame.V_HEIGHT);
-
         hud=new Hud(auberGame.batch);
         //load map
         mapLoader=new TmxMapLoader();
-        map=mapLoader.load("map1.tmx");
+        map=mapLoader.load("mapV2.tmx");
         renderer=new OrthogonalTiledMapRenderer(map,scale);
-        //start pos
 
 
         setupShipStage();
@@ -108,7 +107,7 @@ public class PlayScreen implements Screen {
             teleportAuber();
             auberGame.onTeleport="false";
         }
-        player.checkCollision(tiles.getWalls());
+        player.checkCollision(tiles.getCollisionBoxes());
 
 
 
