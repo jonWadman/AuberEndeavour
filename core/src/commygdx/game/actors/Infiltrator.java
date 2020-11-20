@@ -29,7 +29,6 @@ public class Infiltrator extends Character {
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
-
     @Override
     protected void handleMovement() {
         if(movementAI.left(new Vector2(getX(),getY()))){
