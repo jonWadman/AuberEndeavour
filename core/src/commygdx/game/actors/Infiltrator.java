@@ -25,6 +25,7 @@ public class Infiltrator extends Character {
 
     public Infiltrator(Vector2 position, SpriteBatch batch) {
         super(position, batch);
+        shuffle();
     }
 
     @Override
@@ -34,22 +35,26 @@ public class Infiltrator extends Character {
 
     @Override
     protected void handleMovement() {
-        if(movementAI.left(new Vector2(getX(),getY()))){
-            movementSystem.left();
-        }
-        if(movementAI.right(new Vector2(getX(),getY()))){
-            movementSystem.right();
-        }
-        if(movementAI.up(new Vector2(getX(),getY()))){
-            movementSystem.up();
-        }
-        if(movementAI.down(new Vector2(getX(),getY()))){
-            movementSystem.down();
-        }
+    //    if(movementAI.left(new Vector2(getX(),getY()))){
+    //        movementSystem.left();
+    //    }
+    //    if(movementAI.right(new Vector2(getX(),getY()))){
+    //        movementSystem.right();
+    //    }
+    //    if(movementAI.up(new Vector2(getX(),getY()))){
+    //        movementSystem.up();
+    //    }
+    //    if(movementAI.down(new Vector2(getX(),getY()))){
+    //        movementSystem.down();
+    //    }
     }
 
     public void arrest(Vector2 jail){
         isArrested = true;
         setPosition(jail.x, jail.y);
+    }
+    public void shuffle(){
+        Vector2 position = movementSystem.left();
+        setPosition(position.x,position.y);
     }
 }

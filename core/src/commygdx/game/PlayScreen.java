@@ -11,11 +11,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
+
+import java.util.*;
 
 public class PlayScreen implements Screen {
     private AuberGame auberGame;
@@ -25,10 +28,12 @@ public class PlayScreen implements Screen {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    public ArrayList<Infiltrator> Enemies;
 
 
     //Scene2D
     private Auber player;
+    private Infiltrator enemy;
     private ShipStage shipStage;
 
     private TileWorld tiles;
@@ -62,9 +67,13 @@ public class PlayScreen implements Screen {
         shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
         player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
-
+        enemy=new Infiltrator(new Vector2(4732,7356), auberGame.batch);
+        enemy.sprite.setPosition(4732,7356);
+        Enemies=new ArrayList<Infiltrator>();//Test version of array
 
         shipStage.addActor(player);
+        shipStage.addActor(enemy);
+        Enemies.add(enemy);
 
 
 
@@ -72,6 +81,7 @@ public class PlayScreen implements Screen {
 
     public void update(float dt){
         shipStage.act(dt);
+        player.arrest(Enemies,new Vector2(450*scale,778*scale));
     }
 
     @Override
