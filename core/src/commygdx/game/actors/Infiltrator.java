@@ -27,9 +27,6 @@ public class Infiltrator extends Character {
         movementSystem = new MovementSystem(position,MOV_SPEED);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
 
-    public Infiltrator(Vector2 position, SpriteBatch batch,float MOV_SPEED) {
-        super(position, batch,MOV_SPEED);
-
     }
 
 
