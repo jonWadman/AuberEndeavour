@@ -191,7 +191,7 @@
   <object id="121" x="704" y="512" width="16" height="192"/>
   <object id="122" x="560" y="464" width="160" height="48"/>
   <object id="123" x="560" y="512" width="16" height="32"/>
-  <object id="189" x="95.8182" y="576.727" width="127.818" height="6.72727"/>
+  <object id="189" x="96.8835" y="560.481" width="127.818" height="15.117"/>
  </objectgroup>
  <layer id="3" name="obj" width="50" height="63">
   <data encoding="csv">
