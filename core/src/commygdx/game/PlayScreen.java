@@ -29,6 +29,7 @@ public class PlayScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     public ArrayList<Infiltrator> Enemies;
+    public ArrayList<Vector2> Jail;
 
 
     //Scene2D
@@ -70,18 +71,26 @@ public class PlayScreen implements Screen {
         enemy=new Infiltrator(new Vector2(4732,7356), auberGame.batch);
         enemy.sprite.setPosition(4732,7356);
         Enemies=new ArrayList<Infiltrator>();//Test version of array
+        Jail=new ArrayList<Vector2>(8);
 
         shipStage.addActor(player);
         shipStage.addActor(enemy);
         Enemies.add(enemy);
-
+        Jail.add(new Vector2(2272,5496));
+        Jail.add(new Vector2(2012,5496));
+        Jail.add(new Vector2(1752,5496));
+        Jail.add(new Vector2(1492,5496));
+        Jail.add(new Vector2(2272,5736));
+        Jail.add(new Vector2(2012,5736));
+        Jail.add(new Vector2(1752,5736));
+        Jail.add(new Vector2(1492,5736));
 
 
     }
 
     public void update(float dt){
         shipStage.act(dt);
-        player.arrest(Enemies,new Vector2(450*scale,778*scale));
+        player.arrest(Enemies,Jail,hud);
     }
 
     @Override
