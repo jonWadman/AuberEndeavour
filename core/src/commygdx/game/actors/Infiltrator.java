@@ -11,18 +11,25 @@ import com.badlogic.gdx.physics.box2d.*;
 import commygdx.game.AI.MovementAI;
 
 import commygdx.game.syst.MovementSystem;
+import org.graalvm.compiler.lir.aarch64.AArch64Move;
 
 public class Infiltrator extends Character {
 
     private MovementAI movementAI;
     private Vector2 destination;
 
-    public Infiltrator(Vector2 position, SpriteBatch batch) {
+
+    public Infiltrator(Vector2 position, SpriteBatch batch,float MOV_SPEED) {
+        super(position,batch,MOV_SPEED);
         Texture texture = new Texture(Gdx.files.internal("Characters/infiltratorSprite.png"));
         sprite = new Sprite(texture);
         sprite.setSize(150,170);
         movementSystem = new MovementSystem(position,MOV_SPEED);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
+
+    public Infiltrator(Vector2 position, SpriteBatch batch,float MOV_SPEED) {
+        super(position, batch,MOV_SPEED);
+
     }
 
 
@@ -41,6 +48,4 @@ public class Infiltrator extends Character {
             movementSystem.down();
         }
     }
-
-
 }

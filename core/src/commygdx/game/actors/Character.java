@@ -15,8 +15,6 @@ import java.util.List;
 
 public abstract class Character extends Actor {
 
-    //Constants
-    protected final float MOV_SPEED = 10f;
 
     public Sprite sprite;
     public MovementSystem movementSystem;
@@ -33,6 +31,15 @@ public abstract class Character extends Actor {
     }
 
 
+
+
+    public Character(Vector2 position,SpriteBatch batch,float MOV_SPEED){
+        Texture texture = new Texture(Gdx.files.internal("Characters/auberSprite.png"));
+        sprite = new Sprite(texture);
+        sprite.setSize(150,170);
+        movementSystem = new MovementSystem(position,MOV_SPEED);
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
+    }
 
     protected abstract void handleMovement();
 
