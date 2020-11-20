@@ -9,14 +9,20 @@ import commygdx.game.TileWorld;
 import commygdx.game.input.PlayerInput;
 import commygdx.game.syst.MovementSystem;
 
+import java.util.List;
+import java.util.Vector;
+
 public class Auber extends Character {
 
-    public Auber(Vector2 position, SpriteBatch batch) {
+
+    public Auber(Vector2 position, SpriteBatch batch,float MOV_SPEED) {
+        super(position,batch,MOV_SPEED);
         Texture texture = new Texture(Gdx.files.internal("Characters/auberSprite.png"));
         sprite = new Sprite(texture);
         sprite.setSize(150,170);
         movementSystem = new MovementSystem(position,MOV_SPEED);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
+        shuffle();
     }
 
     @Override
@@ -53,8 +59,21 @@ public class Auber extends Character {
         return false;
     }
 
+    public void arrest(List<Infiltrator> infiltrators,Vector2 jail){
+        if(PlayerInput.arrest()) {
+            for (Infiltrator infiltrator : infiltrators) {
+                if (Math.abs(infiltrator.getX() - this.getX()) < 10 && Math.abs(infiltrator.getY() - this.getY()) < 10) {
+                    infiltrator.setX(jail.x);
+                    infiltrator.setY(jail.y);
+                }
+            }
+        }
+    }
     //moves the camera to the auber when game starts
     public void shuffle(){
-        setPosition(getX()+1,getY());
+        Vector2 position = movementSystem.left();
+        setPosition(position.x,position.y);
     }
+
 }
+

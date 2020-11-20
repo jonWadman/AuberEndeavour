@@ -59,9 +59,8 @@ public class PlayScreen implements Screen {
 
     private void setupShipStage(){
         shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
-        player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
+        player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch,10f);
         player.sprite.setPosition(450*scale,778*scale);
-
 
 
         shipStage.addActor(player);
@@ -82,7 +81,6 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
-
         Vector3 pos=new Vector3((player.getX())+player.getWidth()/2,(player.getY())+player.getHeight()/2,0);
         shipStage.getViewport().getCamera().position.set(pos);
         gamecam.position.set(pos);
@@ -94,7 +92,6 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-
 
         shipStage.draw();
 
@@ -123,7 +120,6 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
-        player.shuffle();
     }
 
     public void teleportAuber(){
