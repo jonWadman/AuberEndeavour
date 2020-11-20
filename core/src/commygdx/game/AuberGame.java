@@ -13,12 +13,15 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public static final int V_HEIGHT=1440;
 	public String onTeleport;
 	private Screen screen;
+	public boolean start;
+	private Screen introScreen;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		introScreen=new IntroScreen(this);
 		screen=new PlayScreen(this);
-		setScreen(screen);
+		setScreen(introScreen);
 		onTeleport="false";
 	}
 
@@ -26,8 +29,15 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public void render () {
 
 		super.render();
+		if (start){
+			//exit intro screen
+			setScreen(screen);
+			start=false;
+
+		}
 
 		if (onTeleport!="true" && onTeleport!="false"){
+			//exit teleport screen
 			setScreen(screen);
 
 		}
