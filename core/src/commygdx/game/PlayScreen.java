@@ -43,6 +43,8 @@ public class PlayScreen implements Screen {
         this.auberGame = auberGame;
         gamecam=new OrthographicCamera();
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
+        /*Possible fullscreen
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());*/
         hud=new Hud(auberGame.batch);
         //load map
         mapLoader=new TmxMapLoader();
@@ -58,7 +60,7 @@ public class PlayScreen implements Screen {
 
     private void setupShipStage(){
         shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
-        player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch,10f);
+        player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
 
 

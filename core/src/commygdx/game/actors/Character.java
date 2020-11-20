@@ -15,10 +15,22 @@ import java.util.List;
 
 public abstract class Character extends Actor {
 
+    //Constants
+    private final float MOV_SPEED = 8;
 
     public Sprite sprite;
     public MovementSystem movementSystem;
-    Batch batch;
+    protected Batch batch;
+
+    public Character(Vector2 position,SpriteBatch batch){
+        this.batch = batch;
+        sprite = new Sprite(getTexture());
+        sprite.setSize(150, 170);
+        movementSystem = new MovementSystem(position, MOV_SPEED);
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    }
+
+    protected abstract Texture getTexture();
 
     @Override
     public void act(float delta) {

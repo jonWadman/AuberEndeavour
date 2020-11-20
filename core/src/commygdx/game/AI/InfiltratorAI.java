@@ -14,7 +14,7 @@ public class InfiltratorAI {
     }
 
     public void update(float dt){
-        
+
     }
 
     private Vector2 generateNewDestination(){
