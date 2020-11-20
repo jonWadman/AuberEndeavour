@@ -15,18 +15,21 @@ import commygdx.game.syst.MovementSystem;
 
 public class Infiltrator extends Character {
 
+    //Constants
+    private final float MOV_SPEED = 8f;
+
     private MovementAI movementAI;
     private Vector2 destination;
+    private boolean isArrested;
 
 
-    public Infiltrator(Vector2 position, SpriteBatch batch,float MOV_SPEED) {
-        //super(position, batch, MOV_SPEED);
+    public Infiltrator(Vector2 position, SpriteBatch batch) {
+        super(position, batch);
+    }
 
-        Texture texture = new Texture(Gdx.files.internal("Characters/infiltratorSprite.png"));
-        sprite = new Sprite(texture);
-        sprite.setSize(150, 170);
-        movementSystem = new MovementSystem(position, MOV_SPEED);
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    @Override
+    protected Texture getTexture(){
+        return new Texture(Gdx.files.internal("Characters/infiltratorSprite.png"));
     }
 
     @Override
@@ -43,5 +46,10 @@ public class Infiltrator extends Character {
         if(movementAI.down(new Vector2(getX(),getY()))){
             movementSystem.down();
         }
+    }
+
+    public void arrest(Vector2 jail){
+        isArrested = true;
+        setPosition(jail.x, jail.y);
     }
 }
