@@ -1,6 +1,6 @@
-package commygdx.game.queue;
+package commygdx.game.AI.graph.queue;
 
-import commygdx.game.AI.PathNode;
+import commygdx.game.AI.graph.PathNode;
 
 public class PriorityItem {
     public PathNode node;

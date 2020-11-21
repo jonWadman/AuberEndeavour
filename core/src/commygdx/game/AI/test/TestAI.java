@@ -1,6 +1,7 @@
-package commygdx.game.AI;
+package commygdx.game.AI.test;
 
 import com.badlogic.gdx.math.Vector2;
+import commygdx.game.AI.MovementAI;
 
 public class TestAI {
     public static void main(String args[]){

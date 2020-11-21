@@ -1,13 +1,11 @@
-package commygdx.game.AI;
+package commygdx.game.AI.graph;
 
-import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
-import commygdx.game.queue.PriorityItem;
-import commygdx.game.queue.PriorityQueue;
+import commygdx.game.AI.graph.queue.PriorityItem;
+import commygdx.game.AI.graph.queue.PriorityQueue;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Stack;
+import java.util.LinkedList;
 
 public class PathGraph {
     private final int VERY_LARGE = 2147483647;
@@ -47,6 +45,17 @@ public class PathGraph {
             }
         }
         return nearest;
+    }
+
+    public PathNode getRandomWorkingSystem(){
+        LinkedList<PathNode> workingSystems = new LinkedList<PathNode>();
+        for(PathNode node:nodes){
+            if(node.isWorkingSystem()){
+                workingSystems.add(node);
+            }
+        }
+        if(workingSystems.isEmpty()){return null;}
+        return workingSystems.get((int) Math.floor(Math.random()*workingSystems.size()));
     }
 
     public  PathNode findPath(PathNode start,PathNode goal){
