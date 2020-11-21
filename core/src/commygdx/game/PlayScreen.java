@@ -105,7 +105,6 @@ public class PlayScreen implements Screen {
         shipStage.getViewport().getCamera().position.set(pos);
         gamecam.position.set(pos);
         gamecam.update();
-        gamecam.update();
         renderer.setView(gamecam);
         //bg colour
         //Gdx.gl.glClearColor(21/255f,25/255f,38/255f,1);
