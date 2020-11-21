@@ -1,4 +1,4 @@
-package commygdx.game;
+package commygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import commygdx.game.AuberGame;
 import commygdx.game.actors.Auber;
 
 public class TeleportMenu implements Screen {

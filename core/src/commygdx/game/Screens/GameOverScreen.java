@@ -1,23 +1,28 @@
-package commygdx.game;
+package commygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import commygdx.game.AuberGame;
+import commygdx.game.actors.Auber;
 
-public class IntroScreen implements Screen {
-    private Texture introTexture;
+public class GameOverScreen implements Screen {
     private OrthographicCamera gamecam;
     private AuberGame game;
+    private BitmapFont font;
 
-    public IntroScreen(AuberGame game){
+    public GameOverScreen(AuberGame game){
         this.game=game;
-        introTexture=new Texture("Intro.png");
+
         gamecam=new OrthographicCamera();
 
-        gamecam.setToOrtho(true, AuberGame.V_WIDTH, AuberGame.V_HEIGHT);
+        gamecam.setToOrtho(false, AuberGame.V_WIDTH, AuberGame.V_HEIGHT);
+        font = new BitmapFont();
+        font.getData().setScale(5f);
+
 
     }
     @Override
@@ -29,15 +34,17 @@ public class IntroScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(21/255f,25/255f,38/255f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.batch.setProjectionMatrix(gamecam.combined);
 
-        //draw buttons
         game.batch.begin();
-        game.batch.draw(introTexture,100,100,introTexture.getWidth()*2.5f,introTexture.getHeight()*2.5f);
+        //draw background, objects, etc.
+        if (game.gameState==2){
+            font.draw(game.batch, "Game Over: You Won!", AuberGame.V_WIDTH/2-300, AuberGame.V_HEIGHT/2);
+        }else{
+            font.draw(game.batch, "Game Over: You Lost", AuberGame.V_WIDTH/2-300, AuberGame.V_HEIGHT/2);
+        }
         game.batch.end();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            game.start=true;
-        }
     }
 
     @Override

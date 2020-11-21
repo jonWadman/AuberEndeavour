@@ -70,7 +70,7 @@ public class Auber extends Character {
     public void arrest(ArrayList<Infiltrator> infiltrators, ArrayList<Vector2> jail,Hud hud){
         if(PlayerInput.arrest()) {
             for (Infiltrator infiltrator : infiltrators) {
-                if (Math.abs(infiltrator.getX() - this.getX()) < 300 && Math.abs(infiltrator.getY() - this.getY()) < 300) {
+                if (Math.abs(infiltrator.getX() - this.getX()) < 200 && Math.abs(infiltrator.getY() - this.getY()) < 200) {
                     infiltrator.arrest(jail.get(0));
                     jail.remove(0);
                     hud.infiltratorCaught();
