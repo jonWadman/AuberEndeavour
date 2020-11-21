@@ -1,4 +1,4 @@
-package commygdx.game.AI;
+package commygdx.game.AI.graph;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,6 +15,7 @@ public class PathNode {
     public PathNode(Vector2 position, boolean system){
         this.position = position;
         this.system = system;
+        this.working = true;
         edges = new ArrayList<PathNode>();
     }
 
@@ -37,5 +38,20 @@ public class PathNode {
             edgesArray[i] = edges.get(i);
         }
         return edgesArray;
+    }
+
+    public boolean isWorkingSystem(){
+        if(system&&working){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String s = position.toString();
+        if(system){s= s + " " + "system";}
+        if(working){s= s + " " + "working";}
+        return s;
     }
 }
