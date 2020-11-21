@@ -1,9 +1,21 @@
-package commygdx.game.AI;
+package commygdx.game.AI.test;
 
 import com.badlogic.gdx.math.Vector2;
+import commygdx.game.AI.InfiltratorAI;
+import commygdx.game.AI.graph.PathGraph;
+import commygdx.game.AI.graph.PathNode;
 
-public class TestGraph {
+public class TestInfiltratorAI {
     public static void main(String args[]){
+        PathGraph graph = getGraph();
+        InfiltratorAI infiltratorAI = new InfiltratorAI(graph);
+
+        infiltratorAI.update(10,new Vector2(300,101));
+        System.out.println(infiltratorAI.goal);
+        System.out.println(infiltratorAI.movAI.destination);
+    }
+
+    private static PathGraph getGraph(){
         PathGraph graph = new PathGraph();
 
         PathNode system = new PathNode(new Vector2(1000,-200),true);
@@ -23,7 +35,7 @@ public class TestGraph {
         graph.addNode(doorOuter1);
         PathNode doorInner1 = new PathNode(new Vector2(250,-150),false);
         graph.addNode(doorInner1);
-        PathNode system1 = new PathNode(new Vector2(200,-170),false);
+        PathNode system1 = new PathNode(new Vector2(200,-170),true);
         graph.addNode(system1);
 
         //edges
@@ -36,25 +48,6 @@ public class TestGraph {
         graph.addEdge(doorInner1,doorOuter1);
         graph.addEdge(doorOuter1,corner1);
         graph.addEdge(corner1,starting);
-
-        //testing nearest node
-        //testNearest(graph);
-
-        //test path finding
-        System.out.println(graph.findPath(starting,system1).position);
-        System.out.println(graph.findPath(corner1,system1).position);
-        System.out.println(graph.findPath(doorOuter1,system1).position);
-        System.out.println(graph.findPath(doorInner1,system1).position);
-    }
-    private static void testNearest(PathGraph graph){
-        double randomx;
-        double randomy;
-        for(int i=0;i<10;i++){
-            randomx = (Math.random()*800 + 400);
-            randomy = (Math.random()*600 -300);
-            System.out.println(randomx);
-            System.out.println(randomy);
-            System.out.println(graph.getNearestNode(new Vector2((float)randomx,(float)randomy)).position);
-        }
+        return graph;
     }
 }

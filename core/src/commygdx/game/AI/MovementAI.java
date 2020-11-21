@@ -4,9 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class MovementAI {
-    private final float DESTINATION_BUFFER = 10;
+    private static final float DESTINATION_BUFFER = 10;
 
-    Vector2 destination;
+    public Vector2 destination;
 
     public void setDestination(Vector2 destination) {
         this.destination = destination;
@@ -44,7 +44,11 @@ public class MovementAI {
     }
 
     public boolean atDestination(Vector2 position){
-        if(destination.dst(position)<DESTINATION_BUFFER){
+        return closeEnough(destination,position);
+    }
+
+    public static boolean closeEnough(Vector2 pos1,Vector2 pos2){
+        if(pos1.dst(pos2)<DESTINATION_BUFFER){
             return true;
         }
         return false;

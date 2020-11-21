@@ -8,21 +8,29 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import commygdx.game.TileWorld;
 import commygdx.game.input.PlayerInput;
+import commygdx.game.stages.Hud;
 import commygdx.game.syst.MovementSystem;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 public class Auber extends Character {
 
+    private final float MOV_SPEED = 10f;
 
-    public Auber(Vector2 position, SpriteBatch batch,float MOV_SPEED) {
-        Texture texture = new Texture(Gdx.files.internal("Characters/auberSprite.png"));
-        sprite = new Sprite(texture);
-        sprite.setSize(150,170);
-        movementSystem = new MovementSystem(position,MOV_SPEED);
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(),sprite.getHeight());
+    public Auber(Vector2 position, SpriteBatch batch) {
+        super(position,batch);
         shuffle();
+        movementSystem.setSpeed(MOV_SPEED);
+    }
+
+
+
+    @Override
+    protected Texture getTexture() {
+        return new Texture(Gdx.files.internal("Characters/auberSprite.png"));
     }
 
     @Override
@@ -59,12 +67,13 @@ public class Auber extends Character {
         return false;
     }
 
-    public void arrest(List<Infiltrator> infiltrators,Vector2 jail){
+    public void arrest(ArrayList<Infiltrator> infiltrators, ArrayList<Vector2> jail,Hud hud){
         if(PlayerInput.arrest()) {
             for (Infiltrator infiltrator : infiltrators) {
-                if (Math.abs(infiltrator.getX() - this.getX()) < 10 && Math.abs(infiltrator.getY() - this.getY()) < 10) {
-                    infiltrator.setX(jail.x);
-                    infiltrator.setY(jail.y);
+                if (Math.abs(infiltrator.getX() - this.getX()) < 300 && Math.abs(infiltrator.getY() - this.getY()) < 300) {
+                    infiltrator.arrest(jail.get(0));
+                    jail.remove(0);
+                    hud.infiltratorCaught();
                 }
             }
         }

@@ -104,4 +104,5 @@ public class Hud {
         }
         attackLabel.setText(room);
     }
+    public int getInfiltratorsRemaining(){return infiltratorsRemaining;}
 }

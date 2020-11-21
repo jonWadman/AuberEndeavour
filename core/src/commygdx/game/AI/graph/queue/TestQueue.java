@@ -1,7 +1,7 @@
-package commygdx.game.queue;
+package commygdx.game.AI.graph.queue;
 
 import com.badlogic.gdx.math.Vector2;
-import commygdx.game.AI.PathNode;
+import commygdx.game.AI.graph.PathNode;
 
 public class TestQueue {
 
