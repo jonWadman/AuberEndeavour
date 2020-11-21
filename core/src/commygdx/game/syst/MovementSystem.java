@@ -22,8 +22,12 @@ public class MovementSystem {
 
     }
 
-    public Vector2 left(){
+    public void setSpeed(float speed){
+        movementSpeed = speed;
+    }
 
+    public Vector2 left(){
+        //don't move if collided
         if (direction==1 && collided){
             return collider.position;
         }
@@ -35,6 +39,7 @@ public class MovementSystem {
     }
 
     public Vector2 right(){
+        //don't move if collided
         if (direction==2 && collided){
             return collider.position;
         }
@@ -46,6 +51,7 @@ public class MovementSystem {
     }
 
     public Vector2 up(){
+        //don't move if collided
         if (direction==3 && collided){
             return collider.position;
         }
@@ -57,6 +63,7 @@ public class MovementSystem {
     }
 
     public Vector2 down(){
+        //don't move if collided
         if (direction==4 && collided){
             return collider.position;
         }
@@ -72,6 +79,7 @@ public class MovementSystem {
         return collider.position;
 
     }
+
     public int getDirection(){
         return direction;
     }

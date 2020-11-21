@@ -45,7 +45,8 @@ public class Hud {
 
         System.out.format("%d / 15 systems",systemsUp);
         font=new BitmapFont();
-        font.getData().setScale(2.5f);
+        font.getData().setScale(3f);
+
 
         systemLabel = new Label(String.format("%d / 15",systemsUp), new Label.LabelStyle(font, Color.WHITE));
         systemTextLabel=new Label("systems operational", new Label.LabelStyle(font, Color.WHITE));
@@ -58,7 +59,7 @@ public class Hud {
         attackTextLabel=new Label("Current attacks", new Label.LabelStyle(font, Color.WHITE));
 
 
-        table.setPosition(1100,0);
+        table.setPosition(viewport.getScreenWidth()-500, 0);
 
         table.add(systemLabel).expandX().padTop(50);
         table.row();
@@ -103,4 +104,6 @@ public class Hud {
         }
         attackLabel.setText(room);
     }
+    public int getInfiltratorsRemaining(){return infiltratorsRemaining;}
+    public int getSystemsUp(){return systemsUp;}
 }

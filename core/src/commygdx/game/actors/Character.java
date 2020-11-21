@@ -16,11 +16,21 @@ import java.util.List;
 public abstract class Character extends Actor {
 
     //Constants
-    protected final float MOV_SPEED = 10f;
+    private final float MOV_SPEED = 8;
 
     public Sprite sprite;
     public MovementSystem movementSystem;
-    Batch batch;
+    protected Batch batch;
+
+    public Character(Vector2 position,SpriteBatch batch){
+        this.batch = batch;
+        sprite = new Sprite(getTexture());
+        sprite.setSize(150, 170);
+        movementSystem = new MovementSystem(position, MOV_SPEED);
+        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    }
+
+    protected abstract Texture getTexture();
 
     @Override
     public void act(float delta) {
@@ -33,7 +43,6 @@ public abstract class Character extends Actor {
     }
 
 
-
     protected abstract void handleMovement();
 
     @Override
@@ -42,11 +51,11 @@ public abstract class Character extends Actor {
         sprite.setPosition(getX(),getY());
     }
 
-    public boolean checkCollision(List<Rectangle> walls){
-        for (Rectangle wall: walls){
+    public boolean checkCollision(List<Rectangle> collisionBoxes){
+        for (Rectangle collisionBox: collisionBoxes){
             //System.out.println(sprite.getBoundingRectangle());
             //System.out.println(wall);
-            if(sprite.getBoundingRectangle().overlaps(wall)){
+            if(sprite.getBoundingRectangle().overlaps(collisionBox)){
                 System.out.println("collide");
                 movementSystem.getDirection();
                 movementSystem.setCollided(true);
