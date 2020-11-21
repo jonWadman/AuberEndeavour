@@ -39,4 +39,34 @@ public class InfiltratorAI {
         }
         return nearest.position;
     }
+
+    //Directional movement methods
+
+    public boolean left(Vector2 position,boolean arrested){
+        if(!arrested && movAI.left(position)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean right(Vector2 position,boolean arrested){
+        if(!arrested && movAI.right(position)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean up(Vector2 position,boolean arrested){
+        if(!arrested && movAI.up(position)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean down(Vector2 position,boolean arrested){
+        if(!arrested && movAI.down(position)){
+            return true;
+        }
+        return false;
+    }
 }
