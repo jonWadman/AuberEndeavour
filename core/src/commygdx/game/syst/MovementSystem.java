@@ -84,11 +84,6 @@ public class MovementSystem {
         return direction;
     }
 
-    public void setMovementSpeed(float speed){
-        this.movementSpeed=speed;
-
-    }
-
     public void setCollided(boolean collided) {
         this.collided = collided;
     }

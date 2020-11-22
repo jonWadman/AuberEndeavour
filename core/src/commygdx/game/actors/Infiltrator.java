@@ -8,9 +8,12 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import commygdx.game.AI.InfiltratorAI;
 import commygdx.game.AI.MovementAI;
 
+import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.Screens.PlayScreen;
+import commygdx.game.ShipSystem;
 import commygdx.game.syst.MovementSystem;
 //import org.graalvm.compiler.lir.aarch64.AArch64Move;
 
@@ -18,24 +21,40 @@ public class Infiltrator extends Character {
 
     //Constants
     private final float MOV_SPEED = 8f;
+    private final float TIME_TO_DESTROY = 1000;
 
-    private MovementAI movementAI;
+    private InfiltratorAI ai;
     private Vector2 destination;
     private boolean isArrested;
     //0=none, 1=invisibility, 2=hallucination 3=shapeshift
     private int power;
-    private int powerCoolDown;
-    private int powerDuration;
+    private float powerCoolDown;
+    private float powerDuration;
     private boolean powerOn;
+    private ShipSystem destroyingSystem=null;
+    private float destructionTimer = 0;
 
 
-    public Infiltrator(Vector2 position, SpriteBatch batch, int power) {
+    public Infiltrator(Vector2 position, SpriteBatch batch, int power,PathGraph graph) {
         super(position, batch);
-        shuffle();
+        setPosition(position.x,position.y);
         this.power=power;
         powerOn=false;
         powerDuration=0;
         powerCoolDown=0;
+        ai = new InfiltratorAI(graph);
+    }
+
+    @Override
+    public void act(float delta) {
+        if(destroyingSystem!=null){
+            destructionTimer += delta*100;
+            if(destructionTimer>TIME_TO_DESTROY){
+
+            }
+        }
+        ai.update(delta,new Vector2(getX(),getY()));
+        super.act(delta);
     }
 
     public void usePower(PlayScreen screen){
@@ -69,18 +88,22 @@ public class Infiltrator extends Character {
 
     @Override
     protected void handleMovement() {
-    //    if(movementAI.left(new Vector2(getX(),getY()))){
-    //        movementSystem.left();
-    //    }
-    //    if(movementAI.right(new Vector2(getX(),getY()))){
-    //        movementSystem.right();
-    //    }
-    //    if(movementAI.up(new Vector2(getX(),getY()))){
-    //        movementSystem.up();
-    //    }
-    //    if(movementAI.down(new Vector2(getX(),getY()))){
-    //        movementSystem.down();
-    //    }
+        if(ai.left(new Vector2(getX(),getY()),isArrested)){
+            Vector2 pos = movementSystem.left();
+            setPosition(pos.x, pos.y);
+        }
+        if(ai.right(new Vector2(getX(),getY()),isArrested)){
+            Vector2 pos = movementSystem.right();
+            setPosition(pos.x, pos.y);
+        }
+        if(ai.up(new Vector2(getX(),getY()),isArrested)){
+            Vector2 pos = movementSystem.up();
+            setPosition(pos.x, pos.y);
+        }
+        if(ai.down(new Vector2(getX(),getY()),isArrested)){
+            Vector2 pos = movementSystem.down();
+            setPosition(pos.x, pos.y);
+        }
     }
 
     public void arrest(Vector2 jail){
@@ -110,6 +133,15 @@ public class Infiltrator extends Character {
         if (powerOn==true){
             powerDuration+=dt;
         }
+    }
+
+    public boolean isAvailable(){
+        return (isArrested);
+    }
+
+    public void startDestruction(ShipSystem system){
+        destroyingSystem=system;
+
     }
 
 

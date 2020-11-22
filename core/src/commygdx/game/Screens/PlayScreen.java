@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
@@ -18,6 +19,7 @@ import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.AI.graph.PathNode;
 
 import commygdx.game.AuberGame;
+import commygdx.game.ShipSystem;
 import commygdx.game.TileWorld;
 import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
@@ -82,7 +84,10 @@ public class PlayScreen implements Screen {
         player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
 
-        enemies=new ArrayList<Infiltrator>(Arrays.asList(
+
+        PathGraph graph = createPathGraph("csv/nodes.csv","csv/edges.csv");
+
+        /*enemies=new ArrayList<Infiltrator>(Arrays.asList(
                 new Infiltrator(new Vector2(4500,7356), auberGame.batch,1),
                 new Infiltrator(new Vector2(4732,7356), auberGame.batch,3),
                 new Infiltrator(new Vector2(5000,7356), auberGame.batch,1),
@@ -91,6 +96,17 @@ public class PlayScreen implements Screen {
                 new Infiltrator(new Vector2(4732,7800), auberGame.batch,3),
                 new Infiltrator(new Vector2(4200,7800), auberGame.batch,1),
                 new Infiltrator(new Vector2(5400,7800), auberGame.batch,1)
+        ));//Test version of array*/
+
+        enemies=new ArrayList<Infiltrator>(Arrays.asList(
+                /*new Infiltrator(new Vector2(4500,7356), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4732,7356), auberGame.batch,3,graph),
+                new Infiltrator(new Vector2(5000,7356), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4732,9000), auberGame.batch,2,graph),
+                new Infiltrator(new Vector2(4732,7500), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4732,7800), auberGame.batch,3,graph),
+                new Infiltrator(new Vector2(4200,7800), auberGame.batch,1,graph),*/
+                new Infiltrator(new Vector2(5400,7800), auberGame.batch,1,graph)
         ));//Test version of array
 
         Jail=new ArrayList<Vector2>(Arrays.asList(
@@ -271,6 +287,21 @@ public class PlayScreen implements Screen {
 
     public TiledMap getMap(){
         return map;
+    }
+
+    private void checkInfiltratorsSystems(){
+        final float range = 200;
+        for(Infiltrator infiltrator:enemies){
+            if(infiltrator.isAvailable()){
+                for(ShipSystem system:tiles.getSystems()){
+                    if(system.getState() ==0){
+                        if(new Vector2(infiltrator.getX(),infiltrator.getY()).dst(system.getPosition())<range){
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

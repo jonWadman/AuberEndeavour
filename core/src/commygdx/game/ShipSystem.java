@@ -1,5 +1,7 @@
 package commygdx.game;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class ShipSystem {
     private float x;
     private float y;
@@ -20,5 +22,17 @@ public class ShipSystem {
     }
     public String getRoom(){
         return room;
+    }
+    public Vector2 getPosition(){
+        return new Vector2(x,y);
+    }
+    public void destroy(){
+        state = 2;
+    }
+    public void startAttack(){
+        state = 1;
+    }
+    public void stopAttack(){
+        state = 0;
     }
 }

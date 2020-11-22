@@ -19,12 +19,12 @@ public class InfiltratorAI {
 
     public void update(float dt,Vector2 position){
         if(goal==null){
-            goal = generateNewGoal(position);
+            goal = generateNewGoal();
         }
         movAI.setDestination(generateNewDestination(position));
     }
 
-    private PathNode generateNewGoal(Vector2 position){
+    private PathNode generateNewGoal(){
         PathNode goal = graph.getRandomWorkingSystem();
         if(goal!=null){
             return goal;
