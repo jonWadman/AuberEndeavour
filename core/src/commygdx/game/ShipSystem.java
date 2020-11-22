@@ -1,17 +1,20 @@
 package commygdx.game;
 
 import com.badlogic.gdx.math.Vector2;
+import commygdx.game.AI.graph.PathGraph;
 
 public class ShipSystem {
     private float x;
     private float y;
     private int state;
     private String room;
-    public ShipSystem(float x,float y, String room){
+    private PathGraph graph;
+    public ShipSystem(float x,float y, String room, PathGraph graph){
         this.x=x;
         this.y=y;
         this.room=room;
         this.state=0;
+        this.graph = graph;
     }
     public void setState(int state){
         //state 0= operational, state 1=under attack, state 2= not operational
@@ -28,11 +31,19 @@ public class ShipSystem {
     }
     public void destroy(){
         state = 2;
+        graph.getNearestNode(getPosition()).setWorking(false);
+        System.out.println("destroyed!");
     }
     public void startAttack(){
         state = 1;
+        System.out.println("attack started");
     }
     public void stopAttack(){
         state = 0;
+    }
+
+    @Override
+    public String toString() {
+        return getPosition().toString() + room;
     }
 }

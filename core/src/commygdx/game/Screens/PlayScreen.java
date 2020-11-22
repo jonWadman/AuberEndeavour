@@ -40,7 +40,7 @@ public class PlayScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
     public ArrayList<Infiltrator> enemies;
     public ArrayList<Vector2> Jail;
-
+    public PathGraph graph;
 
 
     //Scene2D
@@ -71,9 +71,10 @@ public class PlayScreen implements Screen {
         map=mapLoader.load("mapV2.tmx");
         renderer=new OrthogonalTiledMapRenderer(map,scale);
 
-
-
+        graph = createPathGraph("csv/nodes.csv","csv/edges.csv");
         setupShipStage();
+
+
         tiles = new TileWorld(this);
         hallucinateTexture=new Texture("hallucinateV2.png");
         hallucinate=false;
@@ -87,8 +88,6 @@ public class PlayScreen implements Screen {
         player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
 
-
-        PathGraph graph = createPathGraph("csv/nodes.csv","csv/edges.csv");
 
         /*enemies=new ArrayList<Infiltrator>(Arrays.asList(
                 new Infiltrator(new Vector2(4500,7356), auberGame.batch,1),
@@ -215,15 +214,6 @@ public class PlayScreen implements Screen {
         player.movementSystem.updatePos(new Vector2(x,y));
     }
 
-    private void testCreatePathGraph(){
-        PathGraph graph = createPathGraph("csv/nodes.csv","csv/edges.csv");
-        System.out.println("test");
-        for(PathNode node:graph.getNodes()){
-            System.out.println(node);
-            System.out.println(node.getEdges()[0]);
-        }
-    }
-
     private PathGraph createPathGraph(String nodesFilepath,String edgesFilepath){
         PathGraph graph = new PathGraph();
         try {
@@ -278,6 +268,7 @@ public class PlayScreen implements Screen {
                 enemy.stopPower(this);
             }
         }
+        checkInfiltratorsSystems();
     }
 
     public boolean inRange(Infiltrator enemy){
@@ -299,13 +290,14 @@ public class PlayScreen implements Screen {
     }
 
     private void checkInfiltratorsSystems(){
-        final float range = 200;
+        final float range = 20;
         for(Infiltrator infiltrator:enemies){
             if(infiltrator.isAvailable()){
                 for(ShipSystem system:tiles.getSystems()){
                     if(system.getState() ==0){
                         if(new Vector2(infiltrator.getX(),infiltrator.getY()).dst(system.getPosition())<range){
-
+                            infiltrator.startDestruction(system);
+                            system.startAttack();
                         }
                     }
                 }

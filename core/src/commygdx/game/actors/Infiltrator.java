@@ -21,7 +21,7 @@ public class Infiltrator extends Character {
 
     //Constants
     private final float MOV_SPEED = 8f;
-    private final float TIME_TO_DESTROY = 1000;
+    private final float TIME_TO_DESTROY = 1000f;
 
     private InfiltratorAI ai;
     private Vector2 destination;
@@ -50,12 +50,14 @@ public class Infiltrator extends Character {
         if(destroyingSystem!=null){
             destructionTimer += delta*100;
             if(destructionTimer>TIME_TO_DESTROY){
-
+                destroyingSystem.destroy();
+                destroyingSystem = null;
             }
+        }else {
+            ai.update(delta, new Vector2(getX(), getY()));
+            super.act(delta);
+            powerCoolDown = (int) (Math.random() * 1000);
         }
-        ai.update(delta,new Vector2(getX(),getY()));
-        super.act(delta);
-        powerCoolDown=(int)(Math.random()*1000);
     }
 
     public void usePower(PlayScreen screen){
@@ -113,12 +115,6 @@ public class Infiltrator extends Character {
         isArrested = true;
         setPosition(jail.x, jail.y);
     }
-    public void shuffle(){
-        Vector2 position = movementSystem.left();
-        setPosition(position.x,position.y);
-    }
-
-
 
     public void resetTexture(){
         powerCoolDown=0;
@@ -139,12 +135,12 @@ public class Infiltrator extends Character {
     }
 
     public boolean isAvailable(){
-        return (isArrested);
+        return !(isArrested&&destroyingSystem!=null);
     }
 
     public void startDestruction(ShipSystem system){
         destroyingSystem=system;
-
+        destructionTimer = 0;
     }
 
 
