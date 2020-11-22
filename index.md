@@ -18,7 +18,7 @@ Impl1.pdf
 
 # Other Stuff to Add
 
-### [Weekly Writeups](https://google.co.uk/search?q=weekly+writeups)
+### [Weekly Snapshots](https://google.co.uk/search?q=weekly+snapshots)
 weekly-writeups.pdf
 
 ### [Extra Documentation](https://google.co.uk/search?q=extra+documentation)
