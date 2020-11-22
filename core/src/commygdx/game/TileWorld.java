@@ -12,8 +12,8 @@ import java.util.List;
 
 public class TileWorld {
     private Hashtable<String,Rectangle> teleporters;
-    private List<ShipSystem> shipSystems;
-    private List<Rectangle> collisionBoxes;
+    private ArrayList<ShipSystem> shipSystems;
+    private ArrayList<Rectangle> collisionBoxes;
     private int MAG=12;
 
     private Rectangle infirmary;
@@ -101,11 +101,11 @@ public class TileWorld {
 
     public Rectangle getInfirmary(){return infirmary;}
 
-    public List<ShipSystem> getSystems(){
+    public ArrayList<ShipSystem> getSystems(){
         return shipSystems;
     }
 
-    public List<Rectangle> getCollisionBoxes(){
+    public ArrayList<Rectangle> getCollisionBoxes(){
             return collisionBoxes;
     }
 

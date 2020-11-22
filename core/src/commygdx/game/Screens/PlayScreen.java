@@ -57,7 +57,7 @@ public class PlayScreen implements Screen {
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         /*Possible fullscreen
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());*/
-        hud=new Hud(auberGame.batch);
+
         //load map
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("mapV2.tmx");
@@ -69,6 +69,8 @@ public class PlayScreen implements Screen {
         tiles = new TileWorld(this);
         hallucinateTexture=new Texture("hallucinateV2.png");
         hallucinate=false;
+
+        hud=new Hud(auberGame.batch,enemies,tiles.getSystems());
 
 
     }
@@ -142,7 +144,7 @@ public class PlayScreen implements Screen {
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.updateAttacks(tiles.getSystems());
-        hud.stage.draw();
+
 
         boolean t=player.teleportCheck(tiles);
         //switch to teleport menu
@@ -158,15 +160,20 @@ public class PlayScreen implements Screen {
 
         if (hallucinate){ drawHallucinate();}
 
+        hud.stage.draw();
+
 
     }
 
     private void drawHallucinate(){
+
         auberGame.batch.begin();
         auberGame.batch.draw(hallucinateTexture,0,0);
         auberGame.batch.end();
         if (player.sprite.getBoundingRectangle().overlaps(tiles.getInfirmary())){
+            hud.showHallucinateLabel(false);
             hallucinate=false;
+
         }
 
     }
@@ -221,6 +228,7 @@ public class PlayScreen implements Screen {
 
     public void setHallucinate(boolean hallucinate){
         this.hallucinate=hallucinate;
+        hud.showHallucinateLabel(hallucinate);
     }
 
 
