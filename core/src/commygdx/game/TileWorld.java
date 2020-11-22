@@ -16,6 +16,9 @@ public class TileWorld {
     private List<Rectangle> collisionBoxes;
     private int MAG=12;
 
+    private Rectangle infirmary;
+
+
     public TileWorld(PlayScreen screen){
         String[] rooms= new String[]{"command", "laboratory", "infirmary","crew","brig","engine"};
         shipSystems = new ArrayList<>();
@@ -25,7 +28,7 @@ public class TileWorld {
          teleporters = new Hashtable<String,Rectangle>();
         //get systems
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             shipSystems.add(new ShipSystem(rect.x,rect.y,getRoom(rect.x,rect.y)));
 
 
@@ -34,11 +37,7 @@ public class TileWorld {
         }
         //objects
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            rect.x=rect.x*MAG;
-            rect.y=rect.y*MAG;
-            rect.height=rect.height*MAG;
-            rect.width=rect.width*MAG;
+            Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             collisionBoxes.add(rect);
 
         }
@@ -58,11 +57,7 @@ public class TileWorld {
         //walls
 
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            rect.x=rect.x*MAG;
-            rect.y=rect.y*MAG;
-            rect.width=rect.width*MAG;
-            rect.height=rect.height*MAG;
+            Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             collisionBoxes.add(rect);
 
 
@@ -70,12 +65,30 @@ public class TileWorld {
         }
 
 
+        MapObject infirmaryObj=map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class).get(0);
+        this.infirmary = magnifyRectange(((RectangleMapObject) infirmaryObj).getRectangle());
+
+
+
+
+
+
+    }
+    private Rectangle magnifyRectange(Rectangle rect){
+        rect.x=rect.x*MAG;
+        rect.y=rect.y*MAG;
+        rect.width=rect.width*MAG;
+        rect.height=rect.height*MAG;
+        return rect;
     }
 
     public Hashtable<String, Rectangle> getTeleporters(){
         return teleporters;
 
     }
+
+    public Rectangle getInfirmary(){return infirmary;}
+
     public List<ShipSystem> getSystems(){
         return shipSystems;
     }
@@ -85,15 +98,15 @@ public class TileWorld {
     }
 
     public String getRoom(float x, float y){
-        if (y>740){
+        if (y>740*12){
             return "command";
-        }else if (y>545){
+        }else if (y>545*12){
             return "laboratory";
-        }else if (x<240){
+        }else if (x<240*12){
             return "brig";
-        }else if (x>550){
+        }else if (x>550*12){
             return  "crew";
-        }else if (y<305){
+        }else if (y<305*12){
             return "engine";
         }else{
             return "infirmary";

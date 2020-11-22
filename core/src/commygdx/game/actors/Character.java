@@ -56,7 +56,6 @@ public abstract class Character extends Actor {
             //System.out.println(sprite.getBoundingRectangle());
             //System.out.println(wall);
             if(sprite.getBoundingRectangle().overlaps(collisionBox)){
-                System.out.println("collide");
                 movementSystem.getDirection();
                 movementSystem.setCollided(true);
                 return true;
