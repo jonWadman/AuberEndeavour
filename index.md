@@ -14,3 +14,12 @@ Risk1.pdf
 
 ### [Implementation](https://google.co.uk/search?q=implementation)
 Impl1.pdf
+
+
+# Other Stuff to Add
+
+### [Weekly Writeups](https://google.co.uk/search?q=weekly+writeups)
+weekly-writeups.pdf
+
+### [Extra Documentation](https://google.co.uk/search?q=extra+documentation)
+extra-docs.pdf
