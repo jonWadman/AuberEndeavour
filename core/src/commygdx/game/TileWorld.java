@@ -17,21 +17,28 @@ public class TileWorld {
     private int MAG=12;
 
     private Rectangle infirmary;
+    private Rectangle brig;
+    private Rectangle crew;
+    private Rectangle command;
+    private Rectangle laboratory;
+    private Rectangle engine;
 
 
     public TileWorld(PlayScreen screen){
+
+
         String[] rooms= new String[]{"command", "laboratory", "infirmary","crew","brig","engine"};
         shipSystems = new ArrayList<>();
         collisionBoxes=new ArrayList<>();
         TiledMap map= screen.getMap();
 
+        createRooms(map);
+
          teleporters = new Hashtable<String,Rectangle>();
-        //get systems
+        // systems
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             shipSystems.add(new ShipSystem(rect.x,rect.y,getRoom(rect.x,rect.y)));
-
-
 
 
         }
@@ -60,18 +67,23 @@ public class TileWorld {
             Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             collisionBoxes.add(rect);
 
-
-
         }
+    }
 
-
-        MapObject infirmaryObj=map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class).get(0);
-        this.infirmary = magnifyRectange(((RectangleMapObject) infirmaryObj).getRectangle());
-
-
-
-
-
+    private void createRooms(TiledMap map){
+        MapObject roomObj=new MapObject();
+        roomObj=map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class).get(0);
+        infirmary = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
+        roomObj=map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class).get(0);
+        brig = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
+        roomObj=map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class).get(0);
+        crew = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
+        roomObj=map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class).get(0);
+        laboratory = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
+        roomObj=map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class).get(0);
+        command = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
+        roomObj=map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class).get(0);
+        engine = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
 
     }
     private Rectangle magnifyRectange(Rectangle rect){
@@ -98,18 +110,20 @@ public class TileWorld {
     }
 
     public String getRoom(float x, float y){
-        if (y>740*12){
-            return "command";
-        }else if (y>545*12){
-            return "laboratory";
-        }else if (x<240*12){
-            return "brig";
-        }else if (x>550*12){
-            return  "crew";
-        }else if (y<305*12){
-            return "engine";
-        }else{
+        if (infirmary.contains(x,y)){
             return "infirmary";
+        }else if (command.contains(x,y)){
+            return "command";
+        }else if (laboratory.contains(x,y)){
+            return "laboratory";
+        }else if (brig.contains(x,y)){
+            return "brig";
+        }else if (crew.contains(x,y)){
+            return  "crew";
+        }else if (engine.contains(x,y)){
+            return "engine";
+        } else{
+            return "none";
         }
 
     }
