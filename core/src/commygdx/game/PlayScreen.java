@@ -3,6 +3,7 @@ package commygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -13,11 +14,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
+import commygdx.game.AI.graph.PathGraph;
+import commygdx.game.AI.graph.PathNode;
 import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.*;
 
 public class PlayScreen implements Screen {
@@ -61,7 +66,7 @@ public class PlayScreen implements Screen {
         setupShipStage();
         tiles = new TileWorld(this);
 
-
+        testCreatePathGraph();
     }
 
     private void setupShipStage(){
@@ -148,6 +153,47 @@ public class PlayScreen implements Screen {
         player.movementSystem.updatePos(new Vector2(x,y));
     }
 
+    private void testCreatePathGraph(){
+        PathGraph graph = createPathGraph("csv/nodes.csv","csv/edges.csv");
+        System.out.println("test");
+        for(PathNode node:graph.getNodes()){
+            System.out.println(node);
+            System.out.println(node.getEdges()[0]);
+        }
+    }
+
+    private PathGraph createPathGraph(String nodesFilepath,String edgesFilepath){
+        PathGraph graph = new PathGraph();
+        try {
+            //Getting nodes from file
+            LinkedList<PathNode> nodes = new LinkedList<PathNode>();
+
+            FileHandle nodesFile = Gdx.files.internal(nodesFilepath);
+            BufferedReader reader = nodesFile.reader(1000);
+            String line = reader.readLine();
+
+            while ((line=reader.readLine())!=null){
+                String data[] =line.split(",");
+                PathNode node = new PathNode(new Vector2(Float.parseFloat(data[2]),Float.parseFloat(data[3])),Boolean.parseBoolean(data[4]));
+                nodes.add(node);
+                graph.addNode(node);
+            }
+
+            //Getting edges from file
+            FileHandle edgesFile = Gdx.files.internal(edgesFilepath);
+            reader = edgesFile.reader(100);
+            line = reader.readLine();
+
+            while ((line=reader.readLine())!=null){
+                String data[] =line.split(",");
+                graph.addEdge(nodes.get(Integer.parseInt(data[0])),nodes.get(Integer.parseInt(data[1])));
+            }
+
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return graph;
+    }
 
 
     public TiledMap getMap(){

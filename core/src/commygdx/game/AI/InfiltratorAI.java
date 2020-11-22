@@ -35,7 +35,11 @@ public class InfiltratorAI {
     private Vector2 generateNewDestination(Vector2 position){
         PathNode nearest = graph.getNearestNode(position);
         if(MovementAI.closeEnough(nearest.position,position)){
-            return graph.findPath(nearest,goal).position;
+            PathNode destNode = graph.findPath(nearest,goal);
+            if(destNode == null){
+                destNode = restingPosition;
+            }
+            return destNode.position;
         }
         return nearest.position;
     }

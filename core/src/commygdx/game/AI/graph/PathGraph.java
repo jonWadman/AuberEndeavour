@@ -99,4 +99,8 @@ public class PathGraph {
         heuristic +=pathCost(currentPathCost,current,next);
         return heuristic;
     }
+
+    public ArrayList<PathNode> getNodes(){
+        return nodes;
+    }
 }
