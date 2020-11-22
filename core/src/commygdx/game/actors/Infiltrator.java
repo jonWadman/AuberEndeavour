@@ -22,7 +22,7 @@ public class Infiltrator extends Character {
     private MovementAI movementAI;
     private Vector2 destination;
     private boolean isArrested;
-    //0=none, 1=invisibility, 2=hallucination 3=shapeshift
+    //0=none, 1=invisibility, 2=hallucination 3=shapeshift 4=speed booast
     private int power;
     private int powerCoolDown;
     private int powerDuration;
@@ -35,24 +35,28 @@ public class Infiltrator extends Character {
         this.power=power;
         powerOn=false;
         powerDuration=0;
-        powerCoolDown=0;
+        powerCoolDown=(int)(Math.random()*1000);
+
     }
 
     public void usePower(PlayScreen screen){
-        if (power==1){invisibility();}
-        if (power==2){screen.setHallucinate(true);
-            powerCoolDown=0;
-            powerDuration=0;
-            powerOn=true;}
-        if (power==3){shapeShift();}
+        resetPower();
+        if (power==1){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));}
+        if (power==2){screen.setHallucinate(true);}
+        if (power==3){  sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
+        if (power==4){movementSystem.setMovementSpeed(12f);}
+    }
 
-
-
+    private void resetPower(){
+        powerCoolDown=0;
+        powerDuration=0;
+        powerOn=true;
     }
 
     public void stopPower(PlayScreen screen){
         if (power==1){resetTexture(); }
         if (power==3){resetTexture();}
+        if (power==4){movementSystem.setMovementSpeed(MOV_SPEED);}
         powerOn=false;
 
 
@@ -91,12 +95,7 @@ public class Infiltrator extends Character {
         setPosition(position.x,position.y);
     }
 
-    public void invisibility(){
-        powerCoolDown=0;
-        powerDuration=0;
-        powerOn=true;
-        sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));
-    }
+
 
     public void resetTexture(){
         powerCoolDown=0;
@@ -105,12 +104,7 @@ public class Infiltrator extends Character {
         sprite.setTexture(getTexture());
     }
 
-    public void shapeShift(){
-        powerCoolDown=0;
-        powerDuration=0;
-        powerOn=true;
-        sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));
-    }
+
 
     public void updateTimers(float dt){
         if (powerOn==false){
