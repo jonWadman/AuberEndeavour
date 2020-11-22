@@ -83,7 +83,7 @@ public class PlayScreen implements Screen {
                 new Infiltrator(new Vector2(4732,7356), auberGame.batch,3),
                 new Infiltrator(new Vector2(5000,7356), auberGame.batch,1),
                 new Infiltrator(new Vector2(4732,9000), auberGame.batch,2),
-                new Infiltrator(new Vector2(4732,7500), auberGame.batch,1),
+                new Infiltrator(new Vector2(4732,7500), auberGame.batch,4),
                 new Infiltrator(new Vector2(4732,7800), auberGame.batch,3),
                 new Infiltrator(new Vector2(4200,7800), auberGame.batch,1),
                 new Infiltrator(new Vector2(5400,7800), auberGame.batch,1)
@@ -201,10 +201,10 @@ public class PlayScreen implements Screen {
         for (Infiltrator enemy:enemies){
             enemy.updateTimers(dt*100);
 
-            if (enemy.getPowerCooldown()>300 && inRange(enemy)){
+            if (enemy.getPowerCooldown()>1000 && inRange(enemy)){
                 enemy.usePower(this);
             }
-            if (enemy.getPowerDuration()>300){
+            if (enemy.getPowerDuration()>500){
                 enemy.stopPower(this);
             }
         }

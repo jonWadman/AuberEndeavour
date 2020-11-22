@@ -9,7 +9,7 @@ public class ShipSystem {
         this.x=x;
         this.y=y;
         this.room=room;
-        this.state=1;
+        this.state=0;
     }
     public void setState(int state){
         //state 0= operational, state 1=under attack, state 2= not operational
