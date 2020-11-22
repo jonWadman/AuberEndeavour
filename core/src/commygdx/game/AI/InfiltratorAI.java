@@ -19,12 +19,12 @@ public class InfiltratorAI {
 
     public void update(float dt,Vector2 position){
         if(goal==null){
-            goal = generateNewGoal(position);
+            goal = generateNewGoal();
         }
         movAI.setDestination(generateNewDestination(position));
     }
 
-    private PathNode generateNewGoal(Vector2 position){
+    private PathNode generateNewGoal(){
         PathNode goal = graph.getRandomWorkingSystem();
         if(goal!=null){
             return goal;
@@ -35,8 +35,42 @@ public class InfiltratorAI {
     private Vector2 generateNewDestination(Vector2 position){
         PathNode nearest = graph.getNearestNode(position);
         if(MovementAI.closeEnough(nearest.position,position)){
-            return graph.findPath(nearest,goal).position;
+            PathNode destNode = graph.findPath(nearest,goal);
+            if(destNode == null){
+                destNode = restingPosition;
+            }
+            return destNode.position;
         }
         return nearest.position;
+    }
+
+    //Directional movement methods
+
+    public boolean left(Vector2 position,boolean arrested){
+        if(!arrested && movAI.left(position)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean right(Vector2 position,boolean arrested){
+        if(!arrested && movAI.right(position)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean up(Vector2 position,boolean arrested){
+        if(!arrested && movAI.up(position)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean down(Vector2 position,boolean arrested){
+        if(!arrested && movAI.down(position)){
+            return true;
+        }
+        return false;
     }
 }

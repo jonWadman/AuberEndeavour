@@ -47,6 +47,10 @@ public class PathNode {
         return false;
     }
 
+    public void setWorking(boolean working){
+        this.working = working;
+    }
+
     @Override
     public String toString() {
         String s = position.toString();
