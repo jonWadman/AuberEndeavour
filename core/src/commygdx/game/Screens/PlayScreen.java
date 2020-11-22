@@ -67,8 +67,7 @@ public class PlayScreen implements Screen {
 
         setupShipStage();
         tiles = new TileWorld(this);
-        hallucinateTexture=new Texture("hallucinate.png");
-
+        hallucinateTexture=new Texture("hallucinateV2.png");
         hallucinate=false;
 
 
@@ -128,10 +127,10 @@ public class PlayScreen implements Screen {
         checkGameState();
         update(delta);
         updateInfiltrators(delta);
+
         Vector3 pos=new Vector3((player.getX())+player.getWidth()/2,(player.getY())+player.getHeight()/2,0);
         shipStage.getViewport().getCamera().position.set(pos);
         gamecam.position.set(pos);
-        gamecam.update();
         gamecam.update();
         renderer.setView(gamecam);
         //bg colour
@@ -146,27 +145,29 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
 
         boolean t=player.teleportCheck(tiles);
+        //switch to teleport menu
         if (player.teleportCheck(tiles) && auberGame.onTeleport=="false"){
             auberGame.setScreen(new TeleportMenu(auberGame));
         }
-
+        //teleport auber
         if (auberGame.onTeleport!="true" && auberGame.onTeleport!="false"){
             teleportAuber();
             auberGame.onTeleport="false";
         }
         player.checkCollision(tiles.getCollisionBoxes());
 
-        if (hallucinate){
-            auberGame.batch.begin();
-            auberGame.batch.draw(hallucinateTexture,0,0);
-            auberGame.batch.end();
-            System.out.println();
-            if (player.getX()>3300 && player.getX()<6100 && player.getY()>6500 && player.getY()<8000){
-                hallucinate=false;
-            }
+        if (hallucinate){ drawHallucinate();}
+
+
+    }
+
+    private void drawHallucinate(){
+        auberGame.batch.begin();
+        auberGame.batch.draw(hallucinateTexture,0,0);
+        auberGame.batch.end();
+        if (player.sprite.getBoundingRectangle().overlaps(tiles.getInfirmary())){
+            hallucinate=false;
         }
-
-
 
     }
 

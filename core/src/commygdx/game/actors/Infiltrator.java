@@ -39,15 +39,16 @@ public class Infiltrator extends Character {
     }
 
     public void usePower(PlayScreen screen){
-        if (power==1){invisibility();}
-        if (power==2){screen.setHallucinate(true);
-            powerCoolDown=0;
-            powerDuration=0;
-            powerOn=true;}
-        if (power==3){shapeShift();}
+        resetPower();
+        if (power==1){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));}
+        if (power==2){screen.setHallucinate(true);}
+        if (power==3){  sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
+    }
 
-
-
+    private void resetPower(){
+        powerCoolDown=0;
+        powerDuration=0;
+        powerOn=true;
     }
 
     public void stopPower(PlayScreen screen){
@@ -91,12 +92,7 @@ public class Infiltrator extends Character {
         setPosition(position.x,position.y);
     }
 
-    public void invisibility(){
-        powerCoolDown=0;
-        powerDuration=0;
-        powerOn=true;
-        sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));
-    }
+
 
     public void resetTexture(){
         powerCoolDown=0;
@@ -105,12 +101,7 @@ public class Infiltrator extends Character {
         sprite.setTexture(getTexture());
     }
 
-    public void shapeShift(){
-        powerCoolDown=0;
-        powerDuration=0;
-        powerOn=true;
-        sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));
-    }
+
 
     public void updateTimers(float dt){
         if (powerOn==false){

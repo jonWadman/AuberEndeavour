@@ -15,13 +15,8 @@ import commygdx.game.actors.Auber;
 public class TeleportMenu implements Screen {
 
     private AuberGame game;
-    private Texture brigTexture;
-    private Texture commandTexture;
-    private Texture crewTexture;
-    private Texture engineTexture;
-    private Texture infirmaryTexture;
-    private Texture laboratoryTexture;
-    private Texture teleportTexture;
+    private Texture mapTexture;
+
     private OrthographicCamera gamecam;
 
     private Rectangle brigRect;
@@ -30,7 +25,7 @@ public class TeleportMenu implements Screen {
     private  Rectangle engineRect;
     private  Rectangle infirmaryRect;
     private  Rectangle  laboratoryRext;
-    private final int zoom=10;
+    private final int zoom=7;
 
     private int tWidth;
     private int tHeight;
@@ -40,26 +35,19 @@ public class TeleportMenu implements Screen {
         this.game=game;
         gamecam=new OrthographicCamera();
 
-        gamecam.setToOrtho(true, AuberGame.V_WIDTH, AuberGame.V_HEIGHT);
+        gamecam.setToOrtho(false, AuberGame.V_WIDTH, AuberGame.V_HEIGHT);
         //get button textures
-        brigTexture=new Texture("Signs/brig.png");
-        commandTexture=new Texture("Signs/command.png");
-        crewTexture=new Texture("Signs/crew.png");
-        engineTexture=new Texture("Signs/engine.png");
-        infirmaryTexture=new Texture("Signs/infirmary.png");
-        laboratoryTexture=new Texture("Signs/laboratory.png");
-        teleportTexture= new Texture("Signs/teleport.png");
-
+        mapTexture=new Texture("mapv3_signs.png");
         //button rectange bounds
-        tWidth=brigTexture.getWidth()*zoom;
-        tHeight=brigTexture.getHeight()*zoom;
+        tWidth=mapTexture.getWidth()*zoom;
+        tHeight=mapTexture.getHeight()*zoom;
 
-        brigRect=new Rectangle(1000,950,tWidth,tHeight);
-        commandRect=new Rectangle(1000,800,tWidth,tHeight);
-        crewRect=new Rectangle(1000,650,tWidth,tHeight);
-        engineRect=new Rectangle(1000,500,tWidth,tHeight);
-        infirmaryRect=new Rectangle(1000,350,tWidth,tHeight);
-        laboratoryRext=new Rectangle(1000,200,tWidth,tHeight);
+        brigRect=new Rectangle(870,465,183,308);
+        commandRect=new Rectangle(1143,1090,313,181);
+        laboratoryRext=new Rectangle(1121,796,357,222);
+        engineRect=new Rectangle(1143,213,315,232);
+        infirmaryRect=new Rectangle(1121,508,359,223);
+        crewRect=new Rectangle(1543,466,182,307);
 
 
     }
@@ -74,23 +62,15 @@ public class TeleportMenu implements Screen {
         Gdx.gl.glClearColor(21/255f,25/255f,38/255f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        int textureWidth=brigTexture.getWidth()*zoom;
-        int textureHeight=brigTexture.getHeight()*zoom;
+        int textureWidth=mapTexture.getWidth()*zoom;
+        int textureHeight=mapTexture.getHeight()*zoom;
 
         //draw buttons
         game.batch.begin();
-        game.batch.draw(teleportTexture,1000,1100,textureWidth,textureHeight);
-        game.batch.draw(brigTexture,1000,950,textureWidth,textureHeight);
-        game.batch.draw(commandTexture,1000,800,textureWidth,textureHeight);
-        game.batch.draw(crewTexture,1000,650,textureWidth,textureHeight);
-        game.batch.draw(engineTexture,1000,500,textureWidth,textureHeight);
-        game.batch.draw(infirmaryTexture,1000,350,textureWidth,textureHeight);
-        game.batch.draw(laboratoryTexture,1000,200,textureWidth,textureHeight);
+        game.batch.draw(mapTexture,850,200,textureWidth,textureHeight);
         game.batch.end();
 
-
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){onClick(Gdx.input.getX(),Gdx.input.getY());};
-
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){ onClick(Gdx.input.getX(),Gdx.input.getY()); };
 
 
     }
@@ -99,8 +79,6 @@ public class TeleportMenu implements Screen {
             //convert click screen cords to world
             Vector3 clickPos= new Vector3(x,y,0);
             gamecam.unproject(clickPos);
-            clickPos.y=AuberGame.V_HEIGHT-clickPos.y;
-
             //check which button pressed
             if (brigRect.contains(clickPos.x,clickPos.y)){game.onTeleport="brig";}
             if (commandRect.contains(clickPos.x,clickPos.y)){game.onTeleport="command";}
