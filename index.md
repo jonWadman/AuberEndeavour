@@ -23,3 +23,6 @@ weekly-writeups.pdf
 
 ### [Extra Documentation](https://google.co.uk/search?q=extra+documentation)
 extra-docs.pdf
+
+### [Use Cases](https://google.co.uk/search?q=use+cases)
+use-cases.pdf
