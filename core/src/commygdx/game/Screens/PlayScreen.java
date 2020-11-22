@@ -65,7 +65,7 @@ public class PlayScreen implements Screen {
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         /*Possible fullscreen
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());*/
-        hud=new Hud(auberGame.batch);
+
         //load map
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("mapV2.tmx");
@@ -77,6 +77,9 @@ public class PlayScreen implements Screen {
         tiles = new TileWorld(this);
         hallucinateTexture=new Texture("hallucinateV2.png");
         hallucinate=false;
+
+
+        hud=new Hud(auberGame.batch,enemies,tiles.getSystems());
     }
 
     private void setupShipStage(){
@@ -92,7 +95,7 @@ public class PlayScreen implements Screen {
                 new Infiltrator(new Vector2(4732,7356), auberGame.batch,3),
                 new Infiltrator(new Vector2(5000,7356), auberGame.batch,1),
                 new Infiltrator(new Vector2(4732,9000), auberGame.batch,2),
-                new Infiltrator(new Vector2(4732,7500), auberGame.batch,1),
+                new Infiltrator(new Vector2(4732,7500), auberGame.batch,4),
                 new Infiltrator(new Vector2(4732,7800), auberGame.batch,3),
                 new Infiltrator(new Vector2(4200,7800), auberGame.batch,1),
                 new Infiltrator(new Vector2(5400,7800), auberGame.batch,1)
@@ -162,7 +165,7 @@ public class PlayScreen implements Screen {
 
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.updateAttacks(tiles.getSystems());
-        hud.stage.draw();
+
 
         boolean t=player.teleportCheck(tiles);
         //switch to teleport menu
@@ -178,15 +181,20 @@ public class PlayScreen implements Screen {
 
         if (hallucinate){ drawHallucinate();}
 
+        hud.stage.draw();
+
 
     }
 
     private void drawHallucinate(){
+
         auberGame.batch.begin();
         auberGame.batch.draw(hallucinateTexture,0,0);
         auberGame.batch.end();
         if (player.sprite.getBoundingRectangle().overlaps(tiles.getInfirmary())){
+            hud.showHallucinateLabel(false);
             hallucinate=false;
+
         }
 
     }
@@ -263,10 +271,10 @@ public class PlayScreen implements Screen {
         for (Infiltrator enemy:enemies){
             enemy.updateTimers(dt*100);
 
-            if (enemy.getPowerCooldown()>300 && inRange(enemy)){
+            if (enemy.getPowerCooldown()>1000 && inRange(enemy)){
                 enemy.usePower(this);
             }
-            if (enemy.getPowerDuration()>300){
+            if (enemy.getPowerDuration()>500){
                 enemy.stopPower(this);
             }
         }
@@ -283,6 +291,7 @@ public class PlayScreen implements Screen {
 
     public void setHallucinate(boolean hallucinate){
         this.hallucinate=hallucinate;
+        hud.showHallucinateLabel(hallucinate);
     }
 
     public TiledMap getMap(){

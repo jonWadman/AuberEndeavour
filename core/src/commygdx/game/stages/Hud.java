@@ -11,8 +11,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import commygdx.game.AuberGame;
 import commygdx.game.ShipSystem;
+import commygdx.game.actors.Infiltrator;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Hud {
@@ -29,19 +31,27 @@ public class Hud {
     private Label attackLabel;
     private Label attackTextLabel;
 
+    private Label hallucinateLabel;
+
     private BitmapFont font;
+
+    private ArrayList<Infiltrator> enemies;
+    private ArrayList<ShipSystem> systems;
+
 //used for buttons,text, etc
-    public Hud(SpriteBatch sb){
+    public Hud(SpriteBatch sb,ArrayList<Infiltrator> enemies,ArrayList<ShipSystem> systems){
         viewport=new FitViewport(AuberGame.V_WIDTH,AuberGame.V_HEIGHT,new OrthographicCamera());
         stage= new Stage(viewport,sb);
 
+        this.enemies=enemies;
+        this.systems=systems;
 
         Table table = new Table();
         table.top();
         table.setFillParent(true);
 
-        systemsUp=15;
-        infiltratorsRemaining=8;
+        systemsUp=systems.size();
+        infiltratorsRemaining=enemies.size();
 
         System.out.format("%d / 15 systems",systemsUp);
         font=new BitmapFont();
@@ -58,6 +68,8 @@ public class Hud {
         attackLabel=new Label("None", new Label.LabelStyle(font, Color.WHITE));
         attackTextLabel=new Label("Current attacks", new Label.LabelStyle(font, Color.WHITE));
 
+        hallucinateLabel=new Label("", new Label.LabelStyle(font, Color.WHITE));
+
 
         table.setPosition(viewport.getScreenWidth()-500, 0);
 
@@ -72,6 +84,8 @@ public class Hud {
         table.add(attackTextLabel).expandX().padTop(50);
         table.row();
         table.add(attackLabel).expandX().padTop(10);
+        table.row();
+        table.add(hallucinateLabel).expandX().padTop(50);
 
 
         stage.addActor(table);
@@ -89,6 +103,14 @@ public class Hud {
         infiltratorsRemaining-=1;
         infiltratorLabel.setText(String.format("%d / 8",infiltratorsRemaining));
 
+    }
+
+    public void showHallucinateLabel(boolean show){
+        if (show){
+            hallucinateLabel.setText("You are hallucinating \n Go to infirmary to heal ");
+        }else{
+            hallucinateLabel.setText("");
+        }
     }
 
     public void updateAttacks(List<ShipSystem> systems){

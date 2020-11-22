@@ -26,7 +26,7 @@ public class Infiltrator extends Character {
     private InfiltratorAI ai;
     private Vector2 destination;
     private boolean isArrested;
-    //0=none, 1=invisibility, 2=hallucination 3=shapeshift
+    //0=none, 1=invisibility, 2=hallucination 3=shapeshift 4=speed booast
     private int power;
     private float powerCoolDown;
     private float powerDuration;
@@ -55,6 +55,7 @@ public class Infiltrator extends Character {
         }
         ai.update(delta,new Vector2(getX(),getY()));
         super.act(delta);
+        powerCoolDown=(int)(Math.random()*1000);
     }
 
     public void usePower(PlayScreen screen){
@@ -62,6 +63,7 @@ public class Infiltrator extends Character {
         if (power==1){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));}
         if (power==2){screen.setHallucinate(true);}
         if (power==3){  sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
+        if (power==4){movementSystem.setSpeed(12f);}
     }
 
     private void resetPower(){
@@ -73,6 +75,7 @@ public class Infiltrator extends Character {
     public void stopPower(PlayScreen screen){
         if (power==1){resetTexture(); }
         if (power==3){resetTexture();}
+        if (power==4){movementSystem.setSpeed(MOV_SPEED);}
         powerOn=false;
 
 
