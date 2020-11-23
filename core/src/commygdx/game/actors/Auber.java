@@ -67,12 +67,14 @@ public class Auber extends Character {
         return false;
     }
 
-    public void arrest(ArrayList<Infiltrator> infiltrators, ArrayList<Vector2> jail,Hud hud){
+    public void arrest(ArrayList<Infiltrator> infiltrators,Hud hud){
+        /*Arrests the infiltrator if in range and puts it in jail
+        * @param infiltrators this list of infiltrators that are being checked
+        * @hud the hud overlay*/
         if(PlayerInput.arrest()) {
             for (Infiltrator infiltrator : infiltrators) {
                 if (Math.abs(infiltrator.getX() - this.getX()) < 200 && Math.abs(infiltrator.getY() - this.getY()) < 200) {
-                    infiltrator.arrest(jail.get(0));
-                    jail.remove(0);
+                    infiltrator.arrest(new Vector2((float)Math.random()*400+1800,(float)Math.random()*200+5500));
                     hud.infiltratorCaught();
                 }
             }
