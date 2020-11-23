@@ -38,10 +38,12 @@ public class TileWorld {
         // systems
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
-            shipSystems.add(new ShipSystem(rect.x,rect.y,getRoom(rect.x,rect.y)));
+            shipSystems.add(new ShipSystem(rect.x,rect.y,getRoom(rect.x,rect.y),screen.graph));
 
 
         }
+        //temp
+        System.out.println(shipSystems.get(0));
         //objects
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());

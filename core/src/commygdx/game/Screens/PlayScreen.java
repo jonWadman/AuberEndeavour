@@ -3,6 +3,7 @@ package commygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,16 +11,23 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
+import commygdx.game.AI.graph.PathGraph;
+import commygdx.game.AI.graph.PathNode;
+
 import commygdx.game.AuberGame;
+import commygdx.game.ShipSystem;
 import commygdx.game.TileWorld;
 import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
 import commygdx.game.stages.ShipStage;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.*;
 
 public class PlayScreen implements Screen {
@@ -32,7 +40,7 @@ public class PlayScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
     public ArrayList<Infiltrator> enemies;
     public ArrayList<Vector2> Jail;
-
+    public PathGraph graph;
 
 
     //Scene2D
@@ -63,16 +71,16 @@ public class PlayScreen implements Screen {
         map=mapLoader.load("mapV2.tmx");
         renderer=new OrthogonalTiledMapRenderer(map,scale);
 
-
-
+        graph = createPathGraph("csv/nodes.csv","csv/edges.csv");
         setupShipStage();
+
+
         tiles = new TileWorld(this);
         hallucinateTexture=new Texture("hallucinateV2.png");
         hallucinate=false;
 
+
         hud=new Hud(auberGame.batch,enemies,tiles.getSystems());
-
-
     }
 
     private void setupShipStage(){
@@ -80,7 +88,8 @@ public class PlayScreen implements Screen {
         player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
 
-        enemies=new ArrayList<Infiltrator>(Arrays.asList(
+
+        /*enemies=new ArrayList<Infiltrator>(Arrays.asList(
                 new Infiltrator(new Vector2(4500,7356), auberGame.batch,1),
                 new Infiltrator(new Vector2(4732,7356), auberGame.batch,3),
                 new Infiltrator(new Vector2(5000,7356), auberGame.batch,1),
@@ -89,6 +98,17 @@ public class PlayScreen implements Screen {
                 new Infiltrator(new Vector2(4732,7800), auberGame.batch,3),
                 new Infiltrator(new Vector2(4200,7800), auberGame.batch,1),
                 new Infiltrator(new Vector2(5400,7800), auberGame.batch,1)
+        ));//Test version of array*/
+
+        enemies=new ArrayList<Infiltrator>(Arrays.asList(
+                /*new Infiltrator(new Vector2(4500,7356), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4732,7356), auberGame.batch,3,graph),
+                new Infiltrator(new Vector2(5000,7356), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4732,9000), auberGame.batch,2,graph),
+                new Infiltrator(new Vector2(4732,7500), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4732,7800), auberGame.batch,3,graph),
+                new Infiltrator(new Vector2(4200,7800), auberGame.batch,1,graph),*/
+                new Infiltrator(new Vector2(5400,7800), auberGame.batch,1,graph)
         ));//Test version of array
 
         Jail=new ArrayList<Vector2>(Arrays.asList(
@@ -194,6 +214,39 @@ public class PlayScreen implements Screen {
         player.movementSystem.updatePos(new Vector2(x,y));
     }
 
+    private PathGraph createPathGraph(String nodesFilepath,String edgesFilepath){
+        PathGraph graph = new PathGraph();
+        try {
+            //Getting nodes from file
+            LinkedList<PathNode> nodes = new LinkedList<PathNode>();
+
+            FileHandle nodesFile = Gdx.files.internal(nodesFilepath);
+            BufferedReader reader = nodesFile.reader(1000);
+            String line = reader.readLine();
+
+            while ((line=reader.readLine())!=null){
+                String data[] =line.split(",");
+                PathNode node = new PathNode(new Vector2(Float.parseFloat(data[2]),Float.parseFloat(data[3])),Boolean.parseBoolean(data[4]));
+                nodes.add(node);
+                graph.addNode(node);
+            }
+
+            //Getting edges from file
+            FileHandle edgesFile = Gdx.files.internal(edgesFilepath);
+            reader = edgesFile.reader(100);
+            line = reader.readLine();
+
+            while ((line=reader.readLine())!=null){
+                String data[] =line.split(",");
+                graph.addEdge(nodes.get(Integer.parseInt(data[0])),nodes.get(Integer.parseInt(data[1])));
+            }
+
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return graph;
+    }
+
     private void checkGameState(){
         if (hud.getInfiltratorsRemaining()==0){
             auberGame.setGameState(2);
@@ -215,6 +268,7 @@ public class PlayScreen implements Screen {
                 enemy.stopPower(this);
             }
         }
+        checkInfiltratorsSystems();
     }
 
     public boolean inRange(Infiltrator enemy){
@@ -231,10 +285,24 @@ public class PlayScreen implements Screen {
         hud.showHallucinateLabel(hallucinate);
     }
 
-
-
     public TiledMap getMap(){
         return map;
+    }
+
+    private void checkInfiltratorsSystems(){
+        final float range = 20;
+        for(Infiltrator infiltrator:enemies){
+            if(infiltrator.isAvailable()){
+                for(ShipSystem system:tiles.getSystems()){
+                    if(system.getState() ==0){
+                        if(new Vector2(infiltrator.getX(),infiltrator.getY()).dst(system.getPosition())<range){
+                            infiltrator.startDestruction(system);
+                            system.startAttack();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

@@ -68,7 +68,8 @@ public class PathGraph {
         PriorityQueue fringe = new PriorityQueue();
         fringe.push(new PriorityItem(start,null,0,0));
         int count = 0;
-        for(int i =0;i<MAX_ITERATIONS;i++){
+        while(count<MAX_ITERATIONS && !fringe.isEmpty()){
+            count++;
             PriorityItem current = fringe.pop();
             if(current.node.equals(goal)){
                 return current.firstStep;
@@ -98,5 +99,9 @@ public class PathGraph {
         //heuristic
         heuristic +=pathCost(currentPathCost,current,next);
         return heuristic;
+    }
+
+    public ArrayList<PathNode> getNodes(){
+        return nodes;
     }
 }
