@@ -182,7 +182,7 @@ public class PlayScreen implements Screen {
 
         hud.stage.draw();
 
-
+        printPosition();
     }
 
     private void drawHallucinate(){
@@ -328,5 +328,11 @@ public class PlayScreen implements Screen {
         shipStage.dispose();
 
 
+    }
+
+    private void printPosition(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            System.out.println(new Vector3(player.getX(),player.getY(),0));
+        }
     }
 }

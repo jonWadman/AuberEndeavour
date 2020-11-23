@@ -8,9 +8,9 @@ public class InfiltratorAI {
     //The Infiltrator will go here if it has nowhere else to go
     private final PathNode restingPosition = new PathNode(new Vector2(100,100),false);
 
-    public MovementAI movAI;
+    private MovementAI movAI;
     private PathGraph graph;
-    public PathNode goal;
+    private PathNode goal;
 
     public InfiltratorAI(PathGraph graph){
         this.graph = graph;
