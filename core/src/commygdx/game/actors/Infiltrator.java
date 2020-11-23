@@ -14,6 +14,7 @@ import commygdx.game.AI.MovementAI;
 import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.Screens.PlayScreen;
 import commygdx.game.ShipSystem;
+import commygdx.game.stages.Hud;
 import commygdx.game.syst.MovementSystem;
 //import org.graalvm.compiler.lir.aarch64.AArch64Move;
 
@@ -112,9 +113,9 @@ public class Infiltrator extends Character {
         }
     }
 
-    public void arrest(Vector2 jail){
+    public void arrest(Vector2 coords){
         isArrested = true;
-        setPosition(jail.x, jail.y);
+        setPosition(coords.x, coords.y);
     }
 
     public void resetTexture(){

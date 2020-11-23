@@ -14,7 +14,7 @@ public class TileWorld {
     private Hashtable<String,Rectangle> teleporters;
     private ArrayList<ShipSystem> shipSystems;
     private ArrayList<Rectangle> collisionBoxes;
-    private int MAG=12;
+
 
     private Rectangle infirmary;
     private Rectangle brig;
@@ -22,44 +22,44 @@ public class TileWorld {
     private Rectangle command;
     private Rectangle laboratory;
     private Rectangle engine;
+    private int scale;
 
 
     public TileWorld(PlayScreen screen){
+        /* Creates all objects that the sprites can interactive with
+        *@param screen the main game screen*/
 
-
-        String[] rooms= new String[]{"command", "laboratory", "infirmary","crew","brig","engine"};
-        shipSystems = new ArrayList<>();
-        collisionBoxes=new ArrayList<>();
         TiledMap map= screen.getMap();
-
+        this.scale=AuberGame.ZOOM;
         createRooms(map);
 
-         teleporters = new Hashtable<String,Rectangle>();
-        // systems
+
+        // create systems
+        shipSystems = new ArrayList<>();
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             shipSystems.add(new ShipSystem(rect.x,rect.y,getRoom(rect.x,rect.y),screen.graph));
 
 
         }
-        //temp
-        System.out.println(shipSystems.get(0));
-        //objects
+
+        //create objects
+        collisionBoxes=new ArrayList<>();
+
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = magnifyRectange(((RectangleMapObject) object).getRectangle());
             collisionBoxes.add(rect);
 
         }
-        //teleporters
-        int roomId=0;
+        //create teleporters
+        teleporters = new Hashtable<String,Rectangle>();
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            rect.x=rect.x*MAG+rect.width*MAG/2;
-            rect.y=rect.y*MAG+rect.height*MAG/2;
+            rect.x=rect.x*scale+rect.width*scale/2;
+            rect.y=rect.y*scale+rect.height*scale/2;
             rect.width=25;
             rect.height=25;
-            teleporters.put(rooms[roomId],rect);
-            roomId+=1;
+            teleporters.put(getRoom(rect.x,rect.y),rect);
 
 
         }
@@ -73,6 +73,8 @@ public class TileWorld {
     }
 
     private void createRooms(TiledMap map){
+        /*sets bounds for each room as a rectangle
+        * @param map the tmx tile map of the ship*/
         MapObject roomObj=new MapObject();
         roomObj=map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class).get(0);
         infirmary = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
@@ -89,10 +91,12 @@ public class TileWorld {
 
     }
     private Rectangle magnifyRectange(Rectangle rect){
-        rect.x=rect.x*MAG;
-        rect.y=rect.y*MAG;
-        rect.width=rect.width*MAG;
-        rect.height=rect.height*MAG;
+        /*Magnifies the bounds of the rectangle to fit with the zoom of screen
+        * @param rect the bounds that is being enlarged*/
+        rect.x=rect.x*scale;
+        rect.y=rect.y*scale;
+        rect.width=rect.width*scale;
+        rect.height=rect.height*scale;
         return rect;
     }
 
@@ -112,6 +116,10 @@ public class TileWorld {
     }
 
     public String getRoom(float x, float y){
+        /*Finds the room that a coordinate is in
+        * @param x the x coordinate
+        * @param y the y coordinate
+        * @returns a string of the room name*/
         if (infirmary.contains(x,y)){
             return "infirmary";
         }else if (command.contains(x,y)){
