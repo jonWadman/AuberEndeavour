@@ -17,11 +17,22 @@ public class InfiltratorAI {
         movAI = new MovementAI();
     }
 
-    public void update(float dt,Vector2 position){
-        if(goal==null){
-            goal = generateNewGoal();
+    public void update(float dt,Vector2 position) {
+        //If the AI does not have a goal a new goal is generated, if the player is at the generated goal a new one will be generated
+        //An appropriate destination is then set
+        if (goal==null) {
+            while (goal == null) {
+                goal = generateNewGoal();
+                if (MovementAI.closeEnough(position, goal.position)) {
+                    goal = null;
+                }
+            }
+            movAI.setDestination(generateNewDestination(position));
         }
-        movAI.setDestination(generateNewDestination(position));
+        //If the Ai is at it's destination the next one is set
+        if (movAI.atDestination(position)) {
+            movAI.setDestination(generateNewDestination(position));
+        }
     }
 
     private PathNode generateNewGoal(){
