@@ -47,6 +47,7 @@ public class Infiltrator extends Character {
 
     @Override
     public void act(float delta) {
+        if(isArrested){return;}
         if(destroyingSystem!=null){
             destructionTimer += delta*100;
             if(destructionTimer>TIME_TO_DESTROY){
