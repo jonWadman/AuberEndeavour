@@ -10,6 +10,7 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public SpriteBatch batch;
 	public static final int V_WIDTH=2560;
 	public static final int V_HEIGHT=1440;
+	public static final int ZOOM=12;
 	public String onTeleport;
 	private Screen screen;
 	//game state -1= intro screen 0=exitintroscreen 1=playing 2=win 3=lost

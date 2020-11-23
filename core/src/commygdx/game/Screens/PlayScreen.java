@@ -53,14 +53,16 @@ public class PlayScreen implements Screen {
 
 
     private TileWorld tiles;
-    public static int scale=12;
+
     private ShapeRenderer sh;
+    private int scale;
 
 
 
 
     public PlayScreen(AuberGame auberGame){
         this.auberGame = auberGame;
+        this.scale=AuberGame.ZOOM;
         gamecam=new OrthographicCamera();
         gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
         /*Possible fullscreen
@@ -84,6 +86,7 @@ public class PlayScreen implements Screen {
     }
 
     private void setupShipStage(){
+        /*Creates stage and adds characters (auber and infiltrators) to it*/
         shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
         player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
@@ -101,25 +104,17 @@ public class PlayScreen implements Screen {
         ));//Test version of array*/
 
         enemies=new ArrayList<Infiltrator>(Arrays.asList(
-                /*new Infiltrator(new Vector2(4500,7356), auberGame.batch,1,graph),
+                new Infiltrator(new Vector2(4500,7356), auberGame.batch,1,graph),
                 new Infiltrator(new Vector2(4732,7356), auberGame.batch,3,graph),
                 new Infiltrator(new Vector2(5000,7356), auberGame.batch,1,graph),
                 new Infiltrator(new Vector2(4732,9000), auberGame.batch,2,graph),
                 new Infiltrator(new Vector2(4732,7500), auberGame.batch,1,graph),
                 new Infiltrator(new Vector2(4732,7800), auberGame.batch,3,graph),
-                new Infiltrator(new Vector2(4200,7800), auberGame.batch,1,graph),*/
+                new Infiltrator(new Vector2(4200,7800), auberGame.batch,1,graph),
                 new Infiltrator(new Vector2(5400,7800), auberGame.batch,1,graph)
         ));//Test version of array
 
-        Jail=new ArrayList<Vector2>(Arrays.asList(
-                new Vector2(2272,5496),
-                new Vector2(2012,5496),
-                new Vector2(1752,5496),
-                new Vector2(1492,5496),
-                new Vector2(2272,5736),
-                new Vector2(2012,5736),
-                new Vector2(1752,5736),
-                new Vector2(1492,5736)));
+
 
         shipStage.addActor(player);
         //shipStage.addActor(enemy);
@@ -136,7 +131,7 @@ public class PlayScreen implements Screen {
 
     public void update(float dt){
         shipStage.act(dt);
-        player.arrest(enemies,Jail,hud);
+        player.arrest(enemies,hud);
     }
 
     @Override
@@ -146,6 +141,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        /*Draws the game to screen and updates game
+        * @param delta time difference from last call*/
         checkGameState();
         update(delta);
         updateInfiltrators(delta);
@@ -159,14 +156,11 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-
         shipStage.draw();
-
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+
         hud.updateAttacks(tiles.getSystems());
 
-
-        boolean t=player.teleportCheck(tiles);
         //switch to teleport menu
         if (player.teleportCheck(tiles) && auberGame.onTeleport=="false"){
             auberGame.setScreen(new TeleportMenu(auberGame));
@@ -186,7 +180,7 @@ public class PlayScreen implements Screen {
     }
 
     private void drawHallucinate(){
-
+        /*Draws hallucination texture overlay on screen and removes it when auber in infirmary*/
         auberGame.batch.begin();
         auberGame.batch.draw(hallucinateTexture,0,0);
         auberGame.batch.end();
@@ -208,6 +202,7 @@ public class PlayScreen implements Screen {
     }
 
     public void teleportAuber(){
+        /*Update aubers position to teleportation destination*/
         float x=tiles.getTeleporters().get(auberGame.onTeleport).x+100;
         float y=tiles.getTeleporters().get(auberGame.onTeleport).y;
         player.setPosition(x,y);
@@ -248,6 +243,7 @@ public class PlayScreen implements Screen {
     }
 
     private void checkGameState(){
+        /*Shows GameOverScreen if player won or lost*/
         if (hud.getInfiltratorsRemaining()==0){
             auberGame.setGameState(2);
         }

@@ -9,6 +9,7 @@ public class ShipSystem {
     private int state;
     private String room;
     private PathGraph graph;
+
     public ShipSystem(float x,float y, String room, PathGraph graph){
         this.x=x;
         this.y=y;
@@ -29,7 +30,9 @@ public class ShipSystem {
     public Vector2 getPosition(){
         return new Vector2(x,y);
     }
+
     public void destroy(){
+        /* sets the systems operability to destroyed and updates the graph*/
         state = 2;
         graph.getNearestNode(getPosition()).setWorking(false);
         System.out.println("destroyed!");

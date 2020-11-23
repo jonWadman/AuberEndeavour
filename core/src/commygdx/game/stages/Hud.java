@@ -91,19 +91,15 @@ public class Hud {
         stage.addActor(table);
 
 
-
     }
-    public void systemDestroyed(){
-        systemsUp-=1;
-        systemLabel.setText(String.format("%d / 15",systemsUp));
 
-    }
 
     public void infiltratorCaught(){
         infiltratorsRemaining-=1;
         infiltratorLabel.setText(String.format("%d / 8",infiltratorsRemaining));
 
     }
+
 
     public void showHallucinateLabel(boolean show){
         if (show){
@@ -115,16 +111,19 @@ public class Hud {
 
     public void updateAttacks(List<ShipSystem> systems){
         String room=new String();
+        systemsUp=0;
         for (ShipSystem system:systems){
             if (system.getState()==1){
                 room+=system.getRoom();
                 room+="\n";
             }
+            if (system.getState()!=2){systemsUp+=1;}
         }
         if( room.length()<1){
             room="None";
         }
         attackLabel.setText(room);
+        systemLabel.setText(String.format("%d / 15",systemsUp));
     }
     public int getInfiltratorsRemaining(){return infiltratorsRemaining;}
     public int getSystemsUp(){return systemsUp;}
