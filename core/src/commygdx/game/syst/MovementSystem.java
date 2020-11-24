@@ -26,6 +26,10 @@ public class MovementSystem {
         movementSpeed = speed;
     }
 
+    /**
+     * Calculates the position of a character after a left move
+     * @return The new position of the character
+     */
     public Vector2 left(){
         //don't move if collided
         if (direction==1 && collided){
@@ -38,6 +42,10 @@ public class MovementSystem {
         return newPos;
     }
 
+    /**
+     * Calculates the position of a character after a right move
+     * @return The new position of the character
+     */
     public Vector2 right(){
         //don't move if collided
         if (direction==2 && collided){
@@ -50,6 +58,10 @@ public class MovementSystem {
         return newPos;
     }
 
+    /**
+     * Calculates the position of a character after a upwards move
+     * @return The new position of the character
+     */
     public Vector2 up(){
         //don't move if collided
         if (direction==3 && collided){
@@ -62,6 +74,10 @@ public class MovementSystem {
         return newPos;
     }
 
+    /**
+     * Calculates the position of a character after a downwards move
+     * @return The new position of the character
+     */
     public Vector2 down(){
         //don't move if collided
         if (direction==4 && collided){

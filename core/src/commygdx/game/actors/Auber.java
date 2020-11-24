@@ -65,6 +65,11 @@ public class Auber extends Character {
         }
     }
 
+    /**
+     * Checks if the auber is on a teleporter
+     * @param tiles Contains the teleporters
+     * @return True if the auber is on a teleporter, false otherwise
+     */
     public boolean  teleportCheck(TileWorld tiles){
         //check if standing on teleporter
         for ( Rectangle rect : tiles.getTeleporters().values()) {
@@ -75,6 +80,11 @@ public class Auber extends Character {
         return false;
     }
 
+    /**
+     * Arrests any infiltrators in range of the player
+     * @param infiltrators A list of all infiltrators in the game
+     * @param hud The games HUD overlay
+     */
     public void arrest(ArrayList<Infiltrator> infiltrators,Hud hud){
         /*Arrests the infiltrator if in range and puts it in jail
         * @param infiltrators this list of infiltrators that are being checked

@@ -57,17 +57,19 @@ public class Hud {
         font=new BitmapFont();
         font.getData().setScale(3f);
 
-
+        //operational systems
         systemLabel = new Label(String.format("%d / 15",systemsUp), new Label.LabelStyle(font, Color.WHITE));
         systemTextLabel=new Label("systems operational", new Label.LabelStyle(font, Color.WHITE));
 
-
+        //remaining infiltrators
         infiltratorLabel = new Label(String.format("%d / 8 ",infiltratorsRemaining), new Label.LabelStyle(font, Color.WHITE));
         infiltratorTextLabel=new Label("infiltrators remaining", new Label.LabelStyle(font, Color.WHITE));
 
+        //systems under attack
         attackLabel=new Label("None", new Label.LabelStyle(font, Color.WHITE));
         attackTextLabel=new Label("Current attacks", new Label.LabelStyle(font, Color.WHITE));
 
+        //hallucination warning
         hallucinateLabel=new Label("", new Label.LabelStyle(font, Color.WHITE));
 
 
@@ -93,14 +95,19 @@ public class Hud {
 
     }
 
-
+    /**
+     * Updates the HUD to decrease the amount of infiltrators
+     */
     public void infiltratorCaught(){
         infiltratorsRemaining-=1;
         infiltratorLabel.setText(String.format("%d / 8",infiltratorsRemaining));
 
     }
 
-
+    /**
+     * Sets the HUD's hallucination warning off or on
+     * @param show If the hallucination warning should be shown or not
+     */
     public void showHallucinateLabel(boolean show){
         if (show){
             hallucinateLabel.setText("You are hallucinating \n Go to infirmary to heal ");
@@ -109,6 +116,10 @@ public class Hud {
         }
     }
 
+    /**
+     * Updates the HUD's display on what rooms have systems under attack
+     * @param systems List of all the systems on the map
+     */
     public void updateAttacks(List<ShipSystem> systems){
         /*Update hud to reflect attacks*/
         String room=new String();

@@ -42,6 +42,7 @@ public class TeleportMenu implements Screen {
         tWidth=mapTexture.getWidth()*zoom;
         tHeight=mapTexture.getHeight()*zoom;
 
+        //teleport buttons
         brigRect=new Rectangle(870,465,183,308);
         commandRect=new Rectangle(1143,1090,313,181);
         laboratoryRext=new Rectangle(1121,796,357,222);

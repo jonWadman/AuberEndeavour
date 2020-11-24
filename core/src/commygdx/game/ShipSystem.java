@@ -32,7 +32,6 @@ public class ShipSystem {
     }
 
     public void destroy(){
-        /* sets the systems operability to destroyed and updates the graph*/
         state = 2;
         graph.getNearestNode(getPosition()).setWorking(false);
     }
