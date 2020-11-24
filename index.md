@@ -13,6 +13,3 @@
 ### [Weekly Snapshots](https://jonwadman.github.io/AuberEndeavour/files/Snapshots.pdf)
 
 ### [Use Cases](https://jonwadman.github.io/AuberEndeavour/files/UseCases.pdf)
-
-### [Extra Documentation](https://google.co.uk/search?q=extra+documentation)
-extra-docs.pdf
