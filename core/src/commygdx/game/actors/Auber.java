@@ -19,11 +19,13 @@ import java.util.Vector;
 public class Auber extends Character {
 
     private final float MOV_SPEED = 10f;
+    private boolean facingRight;
 
     public Auber(Vector2 position, SpriteBatch batch) {
         super(position,batch);
         shuffle();
         movementSystem.setSpeed(MOV_SPEED);
+        facingRight=true;
     }
 
 
@@ -39,11 +41,19 @@ public class Auber extends Character {
         if(PlayerInput.getDirection()==1){
             Vector2 position = movementSystem.left();
             setPosition(position.x,position.y);
+            if (facingRight==true){
+                sprite.flip(true,false);
+                facingRight=false;
+            }
         }
         //Right movement
         if(PlayerInput.getDirection()==2){
             Vector2 position = movementSystem.right();
             setPosition(position.x,position.y);
+            if (facingRight==false){
+                sprite.flip(true,false);
+                facingRight=true;
+            }
         }
         //Up movement
         if(PlayerInput.getDirection()==3){

@@ -60,6 +60,8 @@ public class InfiltratorAI {
 
     //Directional movement methods
 
+
+
     public boolean left(Vector2 position,boolean arrested){
         if(!arrested && movAI.left(position)){
             return true;

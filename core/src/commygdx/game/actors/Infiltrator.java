@@ -34,6 +34,7 @@ public class Infiltrator extends Character {
     private boolean powerOn;
     private ShipSystem destroyingSystem=null;
     private float destructionTimer = 0;
+    private boolean facingRight;
 
 
     public Infiltrator(Vector2 position, SpriteBatch batch, int power,PathGraph graph) {
@@ -44,6 +45,7 @@ public class Infiltrator extends Character {
         powerDuration=0;
         powerCoolDown=0;
         ai = new InfiltratorAI(graph);
+        facingRight=true;
     }
 
     @Override
@@ -98,10 +100,18 @@ public class Infiltrator extends Character {
         if(ai.left(new Vector2(getX(),getY()),isArrested)){
             Vector2 pos = movementSystem.left();
             setPosition(pos.x, pos.y);
+            if (facingRight==true){
+                sprite.flip(true,false);
+                facingRight=false;
+            }
         }
         if(ai.right(new Vector2(getX(),getY()),isArrested)){
             Vector2 pos = movementSystem.right();
             setPosition(pos.x, pos.y);
+            if (facingRight==false){
+                sprite.flip(true,false);
+                facingRight=true;
+            }
         }
         if(ai.up(new Vector2(getX(),getY()),isArrested)){
             Vector2 pos = movementSystem.up();
