@@ -14,7 +14,7 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public String onTeleport;
 	public Screen screen;
 	public boolean demo;
-	//game state -1= intro screen 0=exit introscreen 1=playing 2=win 3=lost 4=demo
+	//game state -1= intro screen 0=exit introscreen 1=playing 2=win 3=lost
 	public int gameState;
 	private Screen introScreen;
 	private GameOverScreen gameOverScreen;
@@ -31,6 +31,10 @@ public class AuberGame extends com.badlogic.gdx.Game {
 		gameState=-1;
 	}
 
+	/**
+	 * Initialises the game's play screen
+	 * @param demo If the screen should be in demo mode or not
+	 */
 	public void createPlayScreen(boolean demo){
 		screen = new PlayScreen(this,demo);
 	}

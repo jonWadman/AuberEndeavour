@@ -41,6 +41,7 @@ public class IntroScreen implements Screen {
         game.batch.draw(introTexture,40,40,introTexture.getWidth()*2,introTexture.getHeight()*2);
         game.batch.end();
 
+        //player enters either playing mode or demo mode
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             game.createPlayScreen(false);
             game.gameState=0;

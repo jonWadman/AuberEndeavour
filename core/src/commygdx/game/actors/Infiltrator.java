@@ -125,6 +125,10 @@ public class Infiltrator extends Character {
         }
     }
 
+    /**
+     * Arrests the infiltrator, sending them to the given coordinates and setting them to arrested mode
+     * @param coords The coordinates the infiltrator will be sent to
+     */
     public void arrest(Vector2 coords){
         isArrested = true;
         setPosition(coords.x, coords.y);
@@ -154,6 +158,10 @@ public class Infiltrator extends Character {
         return !(isArrested&&destroyingSystem!=null);
     }
 
+    /**
+     * Begins the destruction process of the given system
+     * @param system The system being destroyed
+     */
     public void startDestruction(ShipSystem system){
         destroyingSystem=system;
         destructionTimer = 0;

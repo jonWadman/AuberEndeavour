@@ -55,6 +55,11 @@ public abstract class Character extends Actor {
         sprite.setPosition(getX(),getY());
     }
 
+    /**
+     * Checks if the character is colliding with any of the collision boxes
+     * @param collisionBoxes The collision boxes the character could be colliding with
+     * @return True if the character is colliding with one or more of the boxes, false otherwise
+     */
     public boolean checkCollision(List<Rectangle> collisionBoxes){
         for (Rectangle collisionBox: collisionBoxes){
             //System.out.println(sprite.getBoundingRectangle());

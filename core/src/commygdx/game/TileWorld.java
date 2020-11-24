@@ -25,9 +25,11 @@ public class TileWorld {
     private int scale;
 
 
+    /**
+     * Creates all objects that the sprites can interactive with
+     *@param screen the main game screen
+     * */
     public TileWorld(PlayScreen screen){
-        /* Creates all objects that the sprites can interactive with
-        *@param screen the main game screen*/
 
         TiledMap map= screen.getMap();
         this.scale=AuberGame.ZOOM;
@@ -72,9 +74,11 @@ public class TileWorld {
         }
     }
 
+    /**
+     * Sets rectangle bounds for each room
+     * @param map The game's tile map
+     */
     private void createRooms(TiledMap map){
-        /*sets bounds for each room as a rectangle
-        * @param map the tmx tile map of the ship*/
         MapObject roomObj=new MapObject();
         roomObj=map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class).get(0);
         infirmary = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
@@ -91,9 +95,12 @@ public class TileWorld {
 
 
     }
+    /**
+     * Magnifies the bounds of the rectangle to fit with the zoom of screen
+     * @param rect The bounds being enlarged
+     * @return The magnified bounds
+     */
     private Rectangle magnifyRectange(Rectangle rect){
-        /*Magnifies the bounds of the rectangle to fit with the zoom of screen
-        * @param rect the bounds that is being enlarged*/
         rect.x=rect.x*scale;
         rect.y=rect.y*scale;
         rect.width=rect.width*scale;
@@ -116,11 +123,13 @@ public class TileWorld {
             return collisionBoxes;
     }
 
+    /**
+     * Finds the room that a pair of coordinates are in
+     * @param x The x coordinate
+     * @param y The y coordinate
+     * @return A string the representing the room the coordinates are in or "none" if they are not in a room
+     */
     public String getRoom(float x, float y){
-        /*Finds the room that a coordinate is in
-        * @param x the x coordinate
-        * @param y the y coordinate
-        * @returns a string of the room name*/
         if (infirmary.contains(x,y)){
             return "infirmary";
         }else if (command.contains(x,y)){
