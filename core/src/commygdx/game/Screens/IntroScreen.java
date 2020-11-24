@@ -13,13 +13,13 @@ public class IntroScreen implements Screen {
     private Texture introTexture;
     private OrthographicCamera gamecam;
     private AuberGame game;
-    private FitViewport gamePort;
+
 
     public IntroScreen(AuberGame game){
         this.game=game;
         introTexture=new Texture("IntroV2.png");
         gamecam=new OrthographicCamera();
-        gamePort=new FitViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam);
+
 
         gamecam.setToOrtho(true, AuberGame.V_WIDTH, AuberGame.V_HEIGHT);
 
@@ -38,7 +38,7 @@ public class IntroScreen implements Screen {
         //draw buttons
         game.batch.begin();
         float zoom=gamecam.viewportWidth/introTexture.getWidth()/2;
-        game.batch.draw(introTexture,0,0,gamePort.getScreenWidth(),gamePort.getScreenHeight());
+        game.batch.draw(introTexture,40,40,introTexture.getWidth()*2,introTexture.getHeight()*2);
         game.batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
@@ -54,7 +54,7 @@ public class IntroScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width,height);
+
 
 
     }
