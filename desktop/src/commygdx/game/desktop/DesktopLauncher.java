@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.y=0;
 		config.width= Toolkit.getDefaultToolkit().getScreenSize().width;
 		config.height= Toolkit.getDefaultToolkit().getScreenSize().height;
+
 		new LwjglApplication(new AuberGame(), config);
 
 
