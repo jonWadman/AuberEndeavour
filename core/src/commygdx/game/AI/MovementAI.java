@@ -12,6 +12,9 @@ public class MovementAI {
         this.destination = destination;
     }
 
+
+
+
     public boolean left(Vector2 position){
         if(position.x>destination.x){
             return true;
