@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class MovementAI {
     private static final float DESTINATION_BUFFER = 10;
 
-    private Vector2 destination;
+    public Vector2 destination;
 
     public void setDestination(Vector2 destination) {
         this.destination = destination;

@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.*;
+import commygdx.game.AI.MovementAI;
 import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.AI.graph.PathNode;
 
@@ -177,6 +178,7 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
 
         printPosition();
+        printRemainingSystems();
     }
 
     private void drawHallucinate(){
@@ -236,6 +238,13 @@ public class PlayScreen implements Screen {
                 graph.addEdge(nodes.get(Integer.parseInt(data[0])),nodes.get(Integer.parseInt(data[1])));
             }
 
+            reader.close();
+
+            for(PathNode node:nodes){
+                if(node.getEdges().length==0){
+                    System.out.println(node);
+                }
+            }
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -291,7 +300,7 @@ public class PlayScreen implements Screen {
             if(infiltrator.isAvailable()){
                 for(ShipSystem system:tiles.getSystems()){
                     if(system.getState() ==0){
-                        if(new Vector2(infiltrator.getX(),infiltrator.getY()).dst(system.getPosition())<range){
+                        if(MovementAI.closeEnough(new Vector2(infiltrator.getX(),infiltrator.getY()),system.getPosition())){
                             infiltrator.startDestruction(system);
                             system.startAttack();
                         }
@@ -318,17 +327,24 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-
         map.dispose();
         renderer.dispose();
         shipStage.dispose();
-
 
     }
 
     private void printPosition(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
             System.out.println(new Vector3(player.getX(),player.getY(),0));
+        }
+    }
+    private void printRemainingSystems(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            for(ShipSystem system:tiles.getSystems()){
+                if(system.getState()==0){
+                    System.out.println(system);
+                }
+            }
         }
     }
 }

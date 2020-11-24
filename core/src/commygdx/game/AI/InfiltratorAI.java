@@ -6,7 +6,7 @@ import commygdx.game.AI.graph.PathNode;
 
 public class InfiltratorAI {
     //The Infiltrator will go here if it has nowhere else to go
-    private final PathNode restingPosition = new PathNode(new Vector2(100,100),false);
+    private final PathNode restingPosition = new PathNode(new Vector2(4712,4956),false);
 
     private MovementAI movAI;
     private PathGraph graph;
@@ -31,6 +31,9 @@ public class InfiltratorAI {
         }
         //If the Ai is at it's destination the next one is set
         if (movAI.atDestination(position)) {
+            if(movAI.destination == restingPosition.position){
+                goal = generateNewGoal();
+            }
             movAI.setDestination(generateNewDestination(position));
         }
     }
