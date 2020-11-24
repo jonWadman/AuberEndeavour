@@ -6,11 +6,11 @@ import commygdx.game.AI.graph.PathNode;
 
 public class InfiltratorAI {
     //The Infiltrator will go here if it has nowhere else to go
-    private final PathNode restingPosition = new PathNode(new Vector2(4712,4956),false);
+    protected final PathNode restingPosition = new PathNode(new Vector2(4712,4956),false);
 
-    private MovementAI movAI;
-    private PathGraph graph;
-    private PathNode goal;
+    protected MovementAI movAI;
+    protected PathGraph graph;
+    protected PathNode goal;
 
     public InfiltratorAI(PathGraph graph){
         this.graph = graph;
@@ -38,7 +38,7 @@ public class InfiltratorAI {
         }
     }
 
-    private PathNode generateNewGoal(){
+    protected PathNode generateNewGoal(){
         PathNode goal = graph.getRandomWorkingSystem();
         if(goal!=null){
             return goal;

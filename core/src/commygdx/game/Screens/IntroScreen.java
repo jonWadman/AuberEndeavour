@@ -42,6 +42,12 @@ public class IntroScreen implements Screen {
         game.batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            game.createPlayScreen(false);
+            game.gameState=0;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            game.createPlayScreen(true);
             game.gameState=0;
         }
     }

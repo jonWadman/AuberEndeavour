@@ -19,7 +19,7 @@ import java.util.Vector;
 public class Auber extends Character {
 
     private final float MOV_SPEED = 10f;
-    private boolean facingRight;
+    protected boolean facingRight;
 
     public Auber(Vector2 position, SpriteBatch batch) {
         super(position,batch);

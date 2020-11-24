@@ -24,6 +24,10 @@ public class PathGraph {
         }
     }
 
+    /* Adds a node if it was node already in the graph
+    @param
+    node:
+     */
     public void addNode(PathNode node){
         if(nodes.contains(node)){
             return;
@@ -57,6 +61,17 @@ public class PathGraph {
         }
         if(workingSystems.isEmpty()){return null;}
         return workingSystems.get(randomIndexFromContainer(workingSystems.size()));
+    }
+
+    public PathNode getRandomNonSystem(){
+        LinkedList<PathNode> nonSystems = new LinkedList<PathNode>();
+        for(PathNode node:nodes){
+            if(node.isNonSystem()){
+                nonSystems.add(node);
+            }
+        }
+        if(nonSystems.isEmpty()){return null;}
+        return nonSystems.get(randomIndexFromContainer(nonSystems.size()));
     }
 
     public  PathNode findPath(PathNode start,PathNode goal){
