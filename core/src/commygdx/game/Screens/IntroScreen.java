@@ -38,7 +38,7 @@ public class IntroScreen implements Screen {
         //draw buttons
         game.batch.begin();
         float zoom=gamecam.viewportWidth/introTexture.getWidth()/2;
-        game.batch.draw(introTexture,100,100,introTexture.getWidth()*2,introTexture.getHeight()*2);
+        game.batch.draw(introTexture,0,0,introTexture.getWidth()*2.5f,introTexture.getHeight()*2.5f);
         game.batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
