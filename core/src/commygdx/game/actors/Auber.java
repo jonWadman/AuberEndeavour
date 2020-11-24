@@ -18,7 +18,7 @@ import java.util.Vector;
 
 public class Auber extends Character {
 
-    private final float MOV_SPEED = 10f;
+    private final float MOV_SPEED = 6f;
     protected boolean facingRight;
 
     public Auber(Vector2 position, SpriteBatch batch) {
@@ -83,10 +83,11 @@ public class Auber extends Character {
         * @hud the hud overlay*/
         if(PlayerInput.arrest()) {
             for (Infiltrator infiltrator : infiltrators) {
-                if (Math.abs(infiltrator.getX() - this.getX()) < 200 && Math.abs(infiltrator.getY() - this.getY()) < 200) {
+                if (Math.abs(infiltrator.getX() - this.getX()) < 100 && Math.abs(infiltrator.getY() - this.getY()) < 100) {
                     infiltrator.arrest(new Vector2((float)Math.random()*1000+1200,(float)Math.random()*400+5400));
                     hud.infiltratorCaught();
                 }
+
             }
         }
     }

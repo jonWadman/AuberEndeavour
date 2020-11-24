@@ -21,8 +21,8 @@ import commygdx.game.syst.MovementSystem;
 public class Infiltrator extends Character {
 
     //Constants
-    private final float MOV_SPEED = 8f;
-    private final float TIME_TO_DESTROY = 1000f;
+    private final float MOV_SPEED = 9f;
+    private final float TIME_TO_DESTROY = 500f;
 
     private InfiltratorAI ai;
     private Vector2 destination;
@@ -66,11 +66,11 @@ public class Infiltrator extends Character {
         }
     }
 
-    public void usePower(PlayScreen screen){
+    public void usePower(PlayScreen screen,String room){
         resetPower();
         if (power==1){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));}
-        if (power==2){screen.setHallucinate(true);}
-        if (power==3){  sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
+        if (power==2&&room!="infirmary"){screen.setHallucinate(true);}
+        if (power==3){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
         if (power==4){movementSystem.setSpeed(20f);}
     }
 

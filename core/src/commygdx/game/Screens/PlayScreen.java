@@ -92,14 +92,14 @@ public class PlayScreen implements Screen {
         player.sprite.setPosition(450 * scale, 778 * scale);
 
         enemies = new ArrayList<Infiltrator>(Arrays.asList(
-                new Infiltrator(new Vector2(4500, 7356), auberGame.batch, 4, graph),
-                new Infiltrator(new Vector2(4732, 7356), auberGame.batch, 4, graph),
-                new Infiltrator(new Vector2(5000, 7356), auberGame.batch, 4, graph),
-                new Infiltrator(new Vector2(4732, 9000), auberGame.batch, 4, graph),
+                new Infiltrator(new Vector2(4700, 2000), auberGame.batch, 1, graph),
+                new Infiltrator(new Vector2(4800, 2300), auberGame.batch, 2, graph),
+                new Infiltrator(new Vector2(5000, 7356), auberGame.batch, 3, graph),
+                new Infiltrator(new Vector2(4732, 7000), auberGame.batch, 4, graph),
                 new Infiltrator(new Vector2(4732, 7500), auberGame.batch, 1, graph),
                 new Infiltrator(new Vector2(4732, 7800), auberGame.batch, 1, graph),
-                new Infiltrator(new Vector2(4200, 7800), auberGame.batch, 1, graph),
-                new Infiltrator(new Vector2(5400, 7800), auberGame.batch, 1, graph)
+                new Infiltrator(new Vector2(4200, 7800), auberGame.batch, 2, graph),
+                new Infiltrator(new Vector2(5400, 7800), auberGame.batch, 2, graph)
         ));//Test version of array
 
 
@@ -134,6 +134,9 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         /*Draws the game to screen and updates game
          * @param delta time difference from last call*/
+
+
+
         checkGameState();
         update(delta);
         updateInfiltrators(delta);
@@ -260,10 +263,10 @@ public class PlayScreen implements Screen {
         for (Infiltrator enemy : enemies) {
             enemy.updateTimers(dt * 100);
 
-            if (enemy.getPowerCooldown() > 1000 && inRange(enemy) && enemy.getIsArrested() == false) {
-                enemy.usePower(this);
+            if (enemy.getPowerCooldown() > 500 && inRange(enemy) && enemy.getIsArrested() == false) {
+                enemy.usePower(this,tiles.getRoom(player.getX(), player.getY()));
             }
-            if (enemy.getPowerDuration() > 500) {
+            if (enemy.getPowerDuration() > 1000) {
                 enemy.stopPower(this);
             }
 
@@ -324,6 +327,7 @@ public class PlayScreen implements Screen {
         map.dispose();
         renderer.dispose();
         shipStage.dispose();
+        auberGame.batch.dispose();
 
     }
 }
