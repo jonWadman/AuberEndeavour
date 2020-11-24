@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
 import commygdx.game.AI.MovementAI;
 import commygdx.game.AI.graph.PathGraph;
@@ -25,7 +25,6 @@ import commygdx.game.TileWorld;
 import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
 import commygdx.game.actors.Auber;
-import commygdx.game.stages.ShipStage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,14 +39,13 @@ public class PlayScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     public ArrayList<Infiltrator> enemies;
-    public ArrayList<Vector2> Jail;
     public PathGraph graph;
 
 
     //Scene2D
     private Auber player;
     private Infiltrator enemy;
-    private ShipStage shipStage;
+    private Stage shipStage;
 
     private boolean hallucinate;
     private Texture hallucinateTexture;
@@ -88,7 +86,7 @@ public class PlayScreen implements Screen {
 
     private void setupShipStage(){
         /*Creates stage and adds characters (auber and infiltrators) to it*/
-        shipStage = new ShipStage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
+        shipStage = new Stage(new StretchViewport(AuberGame.V_WIDTH, AuberGame.V_HEIGHT,gamecam));
         player = new Auber(new Vector2(450*scale,778*scale), auberGame.batch);
         player.sprite.setPosition(450*scale,778*scale);
 
@@ -105,12 +103,12 @@ public class PlayScreen implements Screen {
         ));//Test version of array*/
 
         enemies=new ArrayList<Infiltrator>(Arrays.asList(
-                new Infiltrator(new Vector2(4500,7356), auberGame.batch,1,graph),
-                new Infiltrator(new Vector2(4732,7356), auberGame.batch,3,graph),
-                new Infiltrator(new Vector2(5000,7356), auberGame.batch,1,graph),
-                new Infiltrator(new Vector2(4732,9000), auberGame.batch,2,graph),
+                new Infiltrator(new Vector2(4500,7356), auberGame.batch,4,graph),
+                new Infiltrator(new Vector2(4732,7356), auberGame.batch,4,graph),
+                new Infiltrator(new Vector2(5000,7356), auberGame.batch,4,graph),
+                new Infiltrator(new Vector2(4732,9000), auberGame.batch,4,graph),
                 new Infiltrator(new Vector2(4732,7500), auberGame.batch,1,graph),
-                new Infiltrator(new Vector2(4732,7800), auberGame.batch,3,graph),
+                new Infiltrator(new Vector2(4732,7800), auberGame.batch,1,graph),
                 new Infiltrator(new Vector2(4200,7800), auberGame.batch,1,graph),
                 new Infiltrator(new Vector2(5400,7800), auberGame.batch,1,graph)
         ));//Test version of array
@@ -179,6 +177,8 @@ public class PlayScreen implements Screen {
 
         printPosition();
         printRemainingSystems();
+
+
     }
 
     private void drawHallucinate(){
@@ -264,14 +264,15 @@ public class PlayScreen implements Screen {
     public void updateInfiltrators(float dt){
 
         for (Infiltrator enemy:enemies){
-            enemy.updateTimers(dt*100);
+            enemy.updateTimers(dt * 100);
 
-            if (enemy.getPowerCooldown()>1000 && inRange(enemy)){
+            if (enemy.getPowerCooldown() > 1000 && inRange(enemy)&&enemy.getIsArrested()==false) {
                 enemy.usePower(this);
             }
-            if (enemy.getPowerDuration()>500){
+            if (enemy.getPowerDuration() > 500) {
                 enemy.stopPower(this);
             }
+
         }
         checkInfiltratorsSystems();
     }

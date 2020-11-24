@@ -74,7 +74,7 @@ public class Auber extends Character {
         if(PlayerInput.arrest()) {
             for (Infiltrator infiltrator : infiltrators) {
                 if (Math.abs(infiltrator.getX() - this.getX()) < 200 && Math.abs(infiltrator.getY() - this.getY()) < 200) {
-                    infiltrator.arrest(new Vector2((float)Math.random()*400+1800,(float)Math.random()*200+5500));
+                    infiltrator.arrest(new Vector2((float)Math.random()*1000+1200,(float)Math.random()*400+5400));
                     hud.infiltratorCaught();
                 }
             }
