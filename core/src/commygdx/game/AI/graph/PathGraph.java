@@ -3,6 +3,7 @@ package commygdx.game.AI.graph;
 import com.badlogic.gdx.math.Vector2;
 import commygdx.game.AI.graph.queue.PriorityItem;
 import commygdx.game.AI.graph.queue.PriorityQueue;
+import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,12 +61,13 @@ public class PathGraph {
 
     public  PathNode findPath(PathNode start,PathNode goal){
         //Maximum amount of iterations before the search ends as a failure
-        final int MAX_ITERATIONS = 10000;
+        final int MAX_ITERATIONS = 100;
 
         //A* search, returns the next node the AI should go to
 
         //Custom priority queue used to store the fringe of nodes to be visited
         PriorityQueue fringe = new PriorityQueue();
+        LinkedList<PathNode> visited = new LinkedList<>();
         fringe.push(new PriorityItem(start,null,0,0));
         int count = 0;
         while(count<MAX_ITERATIONS && !fringe.isEmpty()){
@@ -74,16 +76,20 @@ public class PathGraph {
             if(current.node.equals(goal)){
                 return current.firstStep;
             }
+            visited.add(current.node);
 
             //Inserting children into queue
             PathNode[] next = current.node.getEdges();
             PathNode firstStep = current.firstStep;
-            for(PathNode node:next){
-                if(current.firstStep == null){
-                    firstStep = node;
+            for(PathNode node:next) {
+                if (!visited.contains(node)) {
+                    if (current.firstStep == null) {
+                        firstStep = node;
+                    }
+                    fringe.push(new PriorityItem(node, firstStep,
+                            heuristic(current.node, goal, node, current.pathCost),
+                            pathCost(current.pathCost, current.node, node)));
                 }
-                fringe.push(new PriorityItem(node,firstStep,
-                        heuristic(current.node,goal,node,current.pathCost),pathCost(current.pathCost,current.node,node)));
             }
         }
         return null;
@@ -94,9 +100,9 @@ public class PathGraph {
     }
 
     private float heuristic(PathNode current,PathNode goal,PathNode next, float currentPathCost){
-        //path cost
-        float heuristic = current.position.dst(next.position);
         //heuristic
+        float heuristic = goal.position.dst(next.position);
+        //path cost
         heuristic +=pathCost(currentPathCost,current,next);
         return heuristic;
     }
