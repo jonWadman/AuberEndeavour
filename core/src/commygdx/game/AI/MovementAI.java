@@ -27,7 +27,7 @@ public class MovementAI {
         }return false;
     }
 
-    public boolean up(Vector2 position){
+    public boolean up(Vector2 position ){
         if(position.y<destination.y){
             return true;
         }return false;
@@ -52,6 +52,13 @@ public class MovementAI {
 
     public static boolean closeEnough(Vector2 pos1,Vector2 pos2){
         if(pos1.dst(pos2)<DESTINATION_BUFFER){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean closeEnough(float pos1,float pos2){
+        if(Math.abs(pos1-pos2)<DESTINATION_BUFFER/2){
             return true;
         }
         return false;
