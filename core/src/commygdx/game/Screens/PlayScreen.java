@@ -1,7 +1,6 @@
 package commygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
-import commygdx.game.AI.MovementAI;
 import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.AI.graph.PathNode;
 
@@ -240,7 +238,7 @@ public class PlayScreen implements Screen {
             reader.close();
 
             for (PathNode node : nodes) {
-                if (node.getEdges().length == 0) {
+                if (node.getAdjacentNodes().length == 0) {
                     System.out.println(node);
                 }
             }

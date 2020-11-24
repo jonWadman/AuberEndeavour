@@ -8,7 +8,7 @@ public class PathNode {
     private boolean system;
     private boolean working;
 
-    private ArrayList<PathNode> edges;
+    private ArrayList<PathNode> adjacentNodes;
 
     public Vector2 position;
 
@@ -16,7 +16,7 @@ public class PathNode {
         this.position = position;
         this.system = system;
         this.working = true;
-        edges = new ArrayList<PathNode>();
+        adjacentNodes = new ArrayList<PathNode>();
     }
 
     @Override
@@ -27,19 +27,23 @@ public class PathNode {
         return false;
     }
 
-    public void addEdge(PathNode node){
-        edges.add(node);
+    public void addAdjacentNode(PathNode node){
+        adjacentNodes.add(node);
     }
 
-    public PathNode[] getEdges() {
+    public PathNode[] getAdjacentNodes() {
         //manually doing toArray to avoid ClassCastException
-        PathNode[] edgesArray = new PathNode[edges.size()];
-        for(int i=0;i< edges.size();i++){
-            edgesArray[i] = edges.get(i);
+        PathNode[] edgesArray = new PathNode[adjacentNodes.size()];
+        for(int i = 0; i< adjacentNodes.size(); i++){
+            edgesArray[i] = adjacentNodes.get(i);
         }
         return edgesArray;
     }
 
+    /**
+     * Returns true if the node represents a system that is working
+     * @return True if the node represents a working system, false otherwise
+     */
     public boolean isWorkingSystem(){
         if(system&&working){
             return true;
