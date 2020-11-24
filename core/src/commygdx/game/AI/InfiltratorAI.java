@@ -3,6 +3,7 @@ package commygdx.game.AI;
 import com.badlogic.gdx.math.Vector2;
 import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.AI.graph.PathNode;
+import commygdx.game.Utility;
 
 public class InfiltratorAI {
     //The Infiltrator will go here if it has nowhere else to go
@@ -23,7 +24,7 @@ public class InfiltratorAI {
         if (goal==null) {
             while (goal == null) {
                 goal = generateNewGoal();
-                if (MovementAI.closeEnough(position, goal.position)) {
+                if (Utility.closeEnough(position, goal.position)) {
                     goal = null;
                 }
             }
@@ -48,7 +49,7 @@ public class InfiltratorAI {
 
     private Vector2 generateNewDestination(Vector2 position){
         PathNode nearest = graph.getNearestNode(position);
-        if(MovementAI.closeEnough(nearest.position,position)){
+        if(Utility.closeEnough(nearest.position,position)){
             PathNode destNode = graph.findPath(nearest,goal);
             if(destNode == null){
                 destNode = graph.getMostEdgesAdjacentNode(nearest);

@@ -2,9 +2,10 @@ package commygdx.game.AI;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import commygdx.game.Utility;
 
 public class MovementAI {
-    private static final float DESTINATION_BUFFER = 10;
+
 
     public Vector2 destination;
 
@@ -46,21 +47,6 @@ public class MovementAI {
         return false;
     }
 
-    public boolean atDestination(Vector2 position){
-        return closeEnough(destination,position);
-    }
-
-    public static boolean closeEnough(Vector2 pos1,Vector2 pos2){
-        if(pos1.dst(pos2)<DESTINATION_BUFFER){
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean closeEnough(float pos1,float pos2){
-        if(Math.abs(pos1-pos2)<DESTINATION_BUFFER/2){
-            return true;
-        }
-        return false;
+    public boolean atDestination(Vector2 position){return Utility.closeEnough(destination,position);
     }
 }

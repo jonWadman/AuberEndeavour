@@ -28,8 +28,6 @@ public class Auber extends Character {
         facingRight=true;
     }
 
-
-
     @Override
     protected Texture getTexture() {
         return new Texture(Gdx.files.internal("Characters/auberSprite.png"));
