@@ -1,7 +1,6 @@
 package commygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
-import commygdx.game.AI.MovementAI;
 import commygdx.game.AI.graph.PathGraph;
 import commygdx.game.AI.graph.PathNode;
 
@@ -136,42 +134,40 @@ public class PlayScreen implements Screen {
         /*Draws the game to screen and updates game
          * @param delta time difference from last call*/
 
-
-
+        //updates game
         checkGameState();
         update(delta);
         updateInfiltrators(delta);
+        teleportCheck();
+        player.checkCollision(tiles.getCollisionBoxes());
+        updateCamera();
 
+        //draws game
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        renderer.render();
+        shipStage.draw();
+
+        if (hallucinate) { drawHallucinate();}
+        hud.updateAttacks(tiles.getSystems());
+        hud.stage.draw();
+    }
+
+    private void updateCamera(){
+        //sets camera to players position
         Vector3 pos = new Vector3((player.getX()) + player.getWidth() / 2, (player.getY()) + player.getHeight() / 2, 0);
         shipStage.getViewport().getCamera().position.set(pos);
         gamecam.position.set(pos);
         gamecam.update();
         renderer.setView(gamecam);
-        //bg colour
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render();
-        shipStage.draw();
         auberGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
-        hud.updateAttacks(tiles.getSystems());
-
-        teleportCheck();
-
-        player.checkCollision(tiles.getCollisionBoxes());
-
-        if (hallucinate) {
-            drawHallucinate();
-        }
-
-        hud.stage.draw();
     }
 
     private void teleportCheck(){
         if(demo){
             return;
         }
-
         //switch to teleport menu
         if (player.teleportCheck(tiles) && auberGame.onTeleport == "false") {
             auberGame.setScreen(new TeleportMenu(auberGame));
@@ -243,7 +239,7 @@ public class PlayScreen implements Screen {
             reader.close();
 
             for (PathNode node : nodes) {
-                if (node.getEdges().length == 0) {
+                if (node.getAdjacentNodes().length == 0) {
                     System.out.println(node);
                 }
             }
@@ -298,6 +294,7 @@ public class PlayScreen implements Screen {
     }
 
     private void checkInfiltratorsSystems() {
+        //Starts attack if infiltrator in range of a system
         for (Infiltrator infiltrator : enemies) {
             if (infiltrator.isAvailable()) {
                 for (ShipSystem system : tiles.getSystems()) {

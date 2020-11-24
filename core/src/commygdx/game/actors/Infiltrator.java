@@ -129,6 +129,7 @@ public class Infiltrator extends Character {
         isArrested = true;
         setPosition(coords.x, coords.y);
 
+
     }
 
     public void resetTexture(){
