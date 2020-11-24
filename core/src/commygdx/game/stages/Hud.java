@@ -71,7 +71,7 @@ public class Hud {
         hallucinateLabel=new Label("", new Label.LabelStyle(font, Color.WHITE));
 
 
-        table.setPosition(viewport.getScreenWidth()-500, 0);
+        table.setPosition(viewport.getScreenWidth()/2+150, 0);
 
         table.add(systemLabel).expandX().padTop(50);
         table.row();
