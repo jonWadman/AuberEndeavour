@@ -32,6 +32,10 @@ public abstract class Character extends Actor {
 
     protected abstract Texture getTexture();
 
+    public Vector2 getPosition(){
+        return new Vector2(getX(),getY());
+    }
+
     @Override
     public void act(float delta) {
         handleMovement();

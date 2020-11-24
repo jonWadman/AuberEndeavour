@@ -12,8 +12,9 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public static final int V_HEIGHT=1440;
 	public static final int ZOOM=12;
 	public String onTeleport;
-	private Screen screen;
-	//game state -1= intro screen 0=exitintroscreen 1=playing 2=win 3=lost
+	public Screen screen;
+	public boolean demo;
+	//game state -1= intro screen 0=exit introscreen 1=playing 2=win 3=lost 4=demo
 	public int gameState;
 	private Screen introScreen;
 	private GameOverScreen gameOverScreen;
@@ -22,18 +23,21 @@ public class AuberGame extends com.badlogic.gdx.Game {
 	public void create () {
 		batch = new SpriteBatch();
 		introScreen=new IntroScreen(this);
-		screen=new PlayScreen(this);
 		gameOverScreen=new GameOverScreen(this);
 		setScreen(introScreen);
 		onTeleport="false";
 		gameState=-1;
 	}
 
+	public void createPlayScreen(boolean demo){
+		screen = new PlayScreen(this,demo);
+	}
+
 	@Override
 	public void render () {
 		super.render();
 		//exit intro screen and start game
-		if (gameState==0){
+		if (gameState==0||gameState==4){
 
 			setScreen(screen);
 			gameState=1;
