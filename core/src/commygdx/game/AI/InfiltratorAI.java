@@ -51,7 +51,8 @@ public class InfiltratorAI {
         if(MovementAI.closeEnough(nearest.position,position)){
             PathNode destNode = graph.findPath(nearest,goal);
             if(destNode == null){
-                destNode = restingPosition;
+                destNode = graph.getMostEdgesAdjacentNode(nearest);
+                goal = null;
             }
             return destNode.position;
         }

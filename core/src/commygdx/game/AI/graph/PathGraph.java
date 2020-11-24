@@ -56,7 +56,7 @@ public class PathGraph {
             }
         }
         if(workingSystems.isEmpty()){return null;}
-        return workingSystems.get((int) Math.floor(Math.random()*workingSystems.size()));
+        return workingSystems.get(randomIndexFromContainer(workingSystems.size()));
     }
 
     public  PathNode findPath(PathNode start,PathNode goal){
@@ -105,6 +105,21 @@ public class PathGraph {
         //path cost
         heuristic +=pathCost(currentPathCost,current,next);
         return heuristic;
+    }
+
+    public PathNode getMostEdgesAdjacentNode(PathNode node){
+        PathNode[] adjacent = node.getEdges();
+        PathNode mostEdges = new PathNode(new Vector2(100,100),false);
+        for(PathNode adjNode:adjacent){
+            if(adjNode.getEdges().length>mostEdges.getEdges().length){
+                mostEdges = adjNode;
+            }
+        }
+        return mostEdges;
+    }
+
+    private static int randomIndexFromContainer(int size){
+        return (int)(Math.floor(Math.random()*size));
     }
 
     public ArrayList<PathNode> getNodes(){
