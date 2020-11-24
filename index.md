@@ -12,17 +12,14 @@ Plan1.pdf
 ### [Risk Assessment and Mitigation](https://google.co.uk/search?q=risk+assessment+and+mitigation)
 Risk1.pdf
 
-### [Implementation](https://google.co.uk/search?q=implementation)
+### [Implementation](https://github.com/jonWadman/AuberEndeavour/blob/website/files/Impl1.pdf)
 Impl1.pdf
-
-
-# Other Stuff to Add
 
 ### [Weekly Snapshots](https://google.co.uk/search?q=weekly+snapshots)
 weekly-writeups.pdf
 
-### [Extra Documentation](https://google.co.uk/search?q=extra+documentation)
-extra-docs.pdf
-
 ### [Use Cases](https://google.co.uk/search?q=use+cases)
 use-cases.pdf
+
+### [Extra Documentation](https://google.co.uk/search?q=extra+documentation)
+extra-docs.pdf
