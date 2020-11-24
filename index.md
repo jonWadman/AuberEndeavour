@@ -6,7 +6,7 @@
 
 ### [Method Selection and Planning](https://jonwadman.github.io/AuberEndeavour/files/Plan1.pdf)
 
-### [Risk Assessment and Mitigation](https://github.com/jonWadman/AuberEndeavour/blob/website/files/Risk1.pdf)
+### [Risk Assessment and Mitigation](https://jonwadman.github.io/AuberEndeavour/files/Risk1.pdf)
 
 ### [Implementation](https://jonwadman.github.io/AuberEndeavour/files/Impl1.pdf)
 
