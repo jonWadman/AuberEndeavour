@@ -3,7 +3,9 @@ package commygdx.game.AI.graph;
 import com.badlogic.gdx.math.Vector2;
 import commygdx.game.AI.graph.queue.PriorityItem;
 import commygdx.game.AI.graph.queue.PriorityQueue;
+import commygdx.game.Utility;
 import sun.awt.image.ImageWatched;
+import sun.nio.ch.Util;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -60,7 +62,7 @@ public class PathGraph {
             }
         }
         if(workingSystems.isEmpty()){return null;}
-        return workingSystems.get(randomIndexFromContainer(workingSystems.size()));
+        return workingSystems.get(Utility.randomIntBelow(workingSystems.size()));
     }
 
     public PathNode getRandomNonSystem(){
@@ -71,7 +73,7 @@ public class PathGraph {
             }
         }
         if(nonSystems.isEmpty()){return null;}
-        return nonSystems.get(randomIndexFromContainer(nonSystems.size()));
+        return nonSystems.get(Utility.randomIntBelow(nonSystems.size()));
     }
 
     public  PathNode findPath(PathNode start,PathNode goal){
@@ -131,10 +133,6 @@ public class PathGraph {
             }
         }
         return mostEdges;
-    }
-
-    private static int randomIndexFromContainer(int size){
-        return (int)(Math.floor(Math.random()*size));
     }
 
     public ArrayList<PathNode> getNodes(){

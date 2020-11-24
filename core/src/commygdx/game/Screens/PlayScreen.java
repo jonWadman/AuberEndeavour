@@ -22,6 +22,7 @@ import commygdx.game.AI.graph.PathNode;
 import commygdx.game.AuberGame;
 import commygdx.game.ShipSystem;
 import commygdx.game.TileWorld;
+import commygdx.game.Utility;
 import commygdx.game.actors.DemoAuber;
 import commygdx.game.actors.Infiltrator;
 import commygdx.game.stages.Hud;
@@ -170,6 +171,7 @@ public class PlayScreen implements Screen {
         if(demo){
             return;
         }
+
         //switch to teleport menu
         if (player.teleportCheck(tiles) && auberGame.onTeleport == "false") {
             auberGame.setScreen(new TeleportMenu(auberGame));
@@ -206,6 +208,9 @@ public class PlayScreen implements Screen {
         float y = tiles.getTeleporters().get(auberGame.onTeleport).y;
         player.setPosition(x, y);
         player.movementSystem.updatePos(new Vector2(x, y));
+        if(demo){
+            player.act(0);
+        }
     }
 
     private PathGraph createPathGraph(String nodesFilepath, String edgesFilepath) {
@@ -297,7 +302,7 @@ public class PlayScreen implements Screen {
             if (infiltrator.isAvailable()) {
                 for (ShipSystem system : tiles.getSystems()) {
                     if (system.getState() == 0) {
-                        if (MovementAI.closeEnough(new Vector2(infiltrator.getX(), infiltrator.getY()), system.getPosition())) {
+                        if (Utility.closeEnough(new Vector2(infiltrator.getX(), infiltrator.getY()), system.getPosition())) {
                             infiltrator.startDestruction(system);
                             system.startAttack();
                         }
