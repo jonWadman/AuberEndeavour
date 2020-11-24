@@ -13,6 +13,8 @@ public class MovementAI {
     }
 
 
+
+
     public boolean left(Vector2 position){
         if(position.x>destination.x){
             return true;
