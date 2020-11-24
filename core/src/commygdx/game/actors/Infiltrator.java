@@ -21,8 +21,8 @@ import commygdx.game.syst.MovementSystem;
 public class Infiltrator extends Character {
 
     //Constants
-    private final float MOV_SPEED = 8f;
-    private final float TIME_TO_DESTROY = 1000f;
+    private final float MOV_SPEED = 9f;
+    private final float TIME_TO_DESTROY = 500f;
 
     private InfiltratorAI ai;
     private Vector2 destination;
@@ -34,6 +34,7 @@ public class Infiltrator extends Character {
     private boolean powerOn;
     private ShipSystem destroyingSystem=null;
     private float destructionTimer = 0;
+    private boolean facingRight;
 
 
     public Infiltrator(Vector2 position, SpriteBatch batch, int power,PathGraph graph) {
@@ -44,11 +45,14 @@ public class Infiltrator extends Character {
         powerDuration=0;
         powerCoolDown=0;
         ai = new InfiltratorAI(graph);
+        facingRight=true;
     }
 
     @Override
     public void act(float delta) {
-        if(isArrested){return;}
+        if(isArrested){
+            if (destroyingSystem!=null){destroyingSystem.setState(0);}
+            return;}
         if(destroyingSystem!=null){
             destructionTimer += delta*100;
             if(destructionTimer>TIME_TO_DESTROY){
@@ -62,12 +66,12 @@ public class Infiltrator extends Character {
         }
     }
 
-    public void usePower(PlayScreen screen){
+    public void usePower(PlayScreen screen,String room){
         resetPower();
         if (power==1){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));}
-        if (power==2){screen.setHallucinate(true);}
-        if (power==3){  sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
-        if (power==4){movementSystem.setSpeed(12f);}
+        if (power==2&&room!="infirmary"){screen.setHallucinate(true);}
+        if (power==3){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
+        if (power==4){movementSystem.setSpeed(20f);}
     }
 
     private void resetPower(){
@@ -98,10 +102,18 @@ public class Infiltrator extends Character {
         if(ai.left(new Vector2(getX(),getY()),isArrested)){
             Vector2 pos = movementSystem.left();
             setPosition(pos.x, pos.y);
+            if (facingRight==true){
+                sprite.flip(true,false);
+                facingRight=false;
+            }
         }
         if(ai.right(new Vector2(getX(),getY()),isArrested)){
             Vector2 pos = movementSystem.right();
             setPosition(pos.x, pos.y);
+            if (facingRight==false){
+                sprite.flip(true,false);
+                facingRight=true;
+            }
         }
         if(ai.up(new Vector2(getX(),getY()),isArrested)){
             Vector2 pos = movementSystem.up();
@@ -116,6 +128,7 @@ public class Infiltrator extends Character {
     public void arrest(Vector2 coords){
         isArrested = true;
         setPosition(coords.x, coords.y);
+
     }
 
     public void resetTexture(){
@@ -144,6 +157,8 @@ public class Infiltrator extends Character {
         destroyingSystem=system;
         destructionTimer = 0;
     }
+
+    public boolean getIsArrested(){return isArrested;}
 
 
 

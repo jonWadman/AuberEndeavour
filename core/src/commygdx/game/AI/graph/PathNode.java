@@ -51,6 +51,10 @@ public class PathNode {
         this.working = working;
     }
 
+    public boolean isNonSystem(){
+        return !system;
+    }
+
     @Override
     public String toString() {
         String s = position.toString();

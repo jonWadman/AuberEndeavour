@@ -89,6 +89,7 @@ public class TileWorld {
         roomObj=map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class).get(0);
         engine = magnifyRectange(((RectangleMapObject) roomObj).getRectangle());
 
+
     }
     private Rectangle magnifyRectange(Rectangle rect){
         /*Magnifies the bounds of the rectangle to fit with the zoom of screen

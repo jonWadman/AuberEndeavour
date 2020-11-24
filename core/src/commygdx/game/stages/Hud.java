@@ -110,12 +110,15 @@ public class Hud {
     }
 
     public void updateAttacks(List<ShipSystem> systems){
+        /*Update hud to reflect attacks*/
         String room=new String();
         systemsUp=0;
         for (ShipSystem system:systems){
             if (system.getState()==1){
-                room+=system.getRoom();
-                room+="\n";
+                if (!room.contains(system.getRoom())){
+                    room+=system.getRoom();
+                    room+="\n";
+                }
             }
             if (system.getState()!=2){systemsUp+=1;}
         }
