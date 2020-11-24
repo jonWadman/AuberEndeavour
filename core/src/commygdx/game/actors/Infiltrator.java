@@ -67,7 +67,7 @@ public class Infiltrator extends Character {
         if (power==1){sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorInvisibleSprite.png")));}
         if (power==2){screen.setHallucinate(true);}
         if (power==3){  sprite.setTexture(new Texture(Gdx.files.internal("Characters/infiltratorShapeshift.png")));}
-        if (power==4){movementSystem.setSpeed(12f);}
+        if (power==4){movementSystem.setSpeed(20f);}
     }
 
     private void resetPower(){
@@ -116,6 +116,7 @@ public class Infiltrator extends Character {
     public void arrest(Vector2 coords){
         isArrested = true;
         setPosition(coords.x, coords.y);
+
     }
 
     public void resetTexture(){
@@ -144,6 +145,8 @@ public class Infiltrator extends Character {
         destroyingSystem=system;
         destructionTimer = 0;
     }
+
+    public boolean getIsArrested(){return isArrested;}
 
 
 
