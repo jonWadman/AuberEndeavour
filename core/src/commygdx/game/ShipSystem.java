@@ -35,11 +35,9 @@ public class ShipSystem {
         /* sets the systems operability to destroyed and updates the graph*/
         state = 2;
         graph.getNearestNode(getPosition()).setWorking(false);
-        System.out.println("destroyed!");
     }
     public void startAttack(){
         state = 1;
-        System.out.println("attack started");
     }
     public void stopAttack(){
         state = 0;
