@@ -1,6 +1,6 @@
 # Game Files
 
-### [Demo Executable](https://jonwadman.github.io/AuberEndeavour/files/desktop-1.0.jar)
+### [Demo Executable](https://jonwadman.github.io/AuberEndeavour/files/Game.jar)
 
 # Assessment Documents
 
